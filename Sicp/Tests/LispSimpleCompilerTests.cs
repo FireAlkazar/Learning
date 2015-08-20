@@ -11,5 +11,13 @@ namespace Sicp.Tests
 
             Assert.Equal(5, result);
         }
+
+        [Fact]
+        public void AddWithSubExpressio()
+        {
+            int result = LispSimpleCompiler.Execute("(+ (+ 1 4) 3)");
+
+            Assert.Equal(8, result);
+        }
     }
 }
