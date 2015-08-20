@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LispSimpleCompiler.cs" />
+    <Compile Include="OriginalExercises\CountChangeProblem_1_14.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />
   </ItemGroup>
