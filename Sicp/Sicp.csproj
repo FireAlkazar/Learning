@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BookExercises\LogarithmicMultiplicationProblem_1_18.cs" />
+    <Compile Include="BookExercises\SimpsonRule_1_29.cs" />
     <Compile Include="LispSimpleCompiler.cs" />
     <Compile Include="BookExercises\CountChangeProblem_1_14.cs" />
     <Compile Include="OtherExercises\ComposeNumberBySummingOtherNumbers.cs" />
