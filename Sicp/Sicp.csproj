@@ -41,13 +41,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookExercises\LogarithmicMultiplicationProblem_1_18.cs" />
     <Compile Include="LispSimpleCompiler.cs" />
     <Compile Include="BookExercises\CountChangeProblem_1_14.cs" />
     <Compile Include="OtherExercises\ComposeNumberBySummingOtherNumbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
