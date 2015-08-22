@@ -41,6 +41,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookExercises\ContinuedFraction_1_37.cs" />
     <Compile Include="BookExercises\LogarithmicMultiplicationProblem_1_18.cs" />
     <Compile Include="BookExercises\SimpsonRule_1_29.cs" />
     <Compile Include="LispSimpleCompiler.cs" />
