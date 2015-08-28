@@ -45,6 +45,7 @@
     <Compile Include="BookExercises\Chapter1\LogarithmicMultiplicationProblem_1_18.cs" />
     <Compile Include="BookExercises\Chapter1\SimpsonRule_1_29.cs" />
     <Compile Include="BookExercises\Chapter2\CountChange_2_19.cs" />
+    <Compile Include="BookExercises\Chapter2\DeepReverse_2_27.cs" />
     <Compile Include="BookExercises\Chapter2\Models\Pair.cs" />
     <Compile Include="BookExercises\Chapter2\MultiplyNegative_2_1.cs" />
     <Compile Include="BookExercises\Chapter2\PairAsSingleNumber_2_5.cs" />
