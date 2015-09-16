@@ -9,7 +9,7 @@ namespace Sicp.BookExercises.Chapter2
     public class DeepReverse_2_27
     {
         [Fact]
-        public void Test()
+        public void TreeDeepReverse()
         {
             var firstSubList = new Pair(new IntNode(1), new Pair(new IntNode(2), null));
             var secondSubList = new Pair(new IntNode(3), new Pair(new IntNode(4), null));
@@ -17,28 +17,13 @@ namespace Sicp.BookExercises.Chapter2
             var list = new Pair(firstSubList, new Pair(secondSubList, null));
 
             INode result = DeepReverse(list);
+
+            Assert.Equal(4, ((IntNode)(((Pair)((Pair)result).Value).Value)).IntValue);
         }
 
         private INode DeepReverse(INode list)
         {
-            if (list == null)
-            {
-                return null;
-            }
-
-            if (list.IsPair == false)
-            {
-                return list;
-            }
-
-            var pair = (Pair)list;
-
-            if (pair.Next == null)
-            {
-                return new Pair(DeepReverse(pair.Value), null);
-            }
-
-            return new Pair(DeepReverse(pair.Next), pair);
+            return DeepReverseIter(list, null);
         }
 
         private INode DeepReverseIter(INode list, INode curResult)
@@ -49,9 +34,13 @@ namespace Sicp.BookExercises.Chapter2
             }
 
             if (list.IsPair == false)
-            { 
-                return new Pair()???
+            {
+                return ((IntNode)list).Clone();
             }
+
+            var reversedCurrentNode = DeepReverseIter(((Pair)list).Value, null);
+
+            return DeepReverseIter(((Pair)list).Next, new Pair(reversedCurrentNode, (Pair)curResult));
         }
 
         interface INode
@@ -71,6 +60,11 @@ namespace Sicp.BookExercises.Chapter2
             public bool IsPair
             {
                 get { return false; }
+            }
+
+            public IntNode Clone()
+            {
+                return new IntNode(IntValue);
             }
         }
 

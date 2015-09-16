@@ -32,12 +32,6 @@
 
         public static Pair Reverse(Pair list)
         {
-            //if (list.Next == null)
-            //{
-            //    return list;
-            //}
-
-            //return Append(Reverse(list.Next), list.Value);
             return ReverseIter(list, null);
         }
 
