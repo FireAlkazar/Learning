@@ -143,10 +143,8 @@ function makeCodeTree(left, right)
     return list(
 		left,
 		right,
-		append( 
-			symbols(left), 
-			symbols(right),
-			weight(left) + weight(right)));
+		append(symbols(left), symbols(right)),
+		weight(left) + weight(right));
 }
 
 function leftBranch(tree)
