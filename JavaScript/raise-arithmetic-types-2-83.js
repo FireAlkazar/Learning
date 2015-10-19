@@ -139,5 +139,5 @@ function installRaiseFunctions()
 	put('raise', list('rational'), raiseRat);
 }
 
-//var right = rightBranch(result);
-//alert(symbols(right) + ': ' + weight(right));
+var right = rightBranch(result);
+alert(symbols(right) + ': ' + weight(right));
