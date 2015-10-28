@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Tutorial.fsx" />
     <None Include="Polynomials_2_91.fsx" />
+    <None Include="Accumulator_3_1.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
