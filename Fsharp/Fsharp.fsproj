@@ -57,6 +57,7 @@
     <None Include="Polynomials_2_91.fsx" />
     <None Include="Accumulator_3_1.fsx" />
     <None Include="FunctionCallCounter_3_2.fsx" />
+    <None Include="Mystery-function-3-14.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
