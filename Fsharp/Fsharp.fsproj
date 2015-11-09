@@ -60,6 +60,7 @@
     <None Include="Mystery-function-3-14.fsx" />
     <None Include="MultiKeyTable_3_25.fsx" />
     <None Include="MultiplyStreams_3_54.fsx" />
+    <None Include="PartialSums_3_55.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
