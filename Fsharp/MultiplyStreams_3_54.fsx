@@ -20,16 +20,23 @@ let nats = fix (fun x -> Cons (1, lazy ( (force (map ((+) 1))) (force x)  )))
 let map2 f = fix (fun f' x y -> Cons (f (head x) (head y), lazy(force f' (tail x) (tail y)))  )
 
 let rec nth stream count =
-    if count = 0 then head stream
-    else nth (tail stream) (count-1)
+    if count = 0 then head (force stream)
+    else
+        let rest = lazy(tail (force stream)) 
+        nth rest (count-1)
 
 let add s1 s2 =
     lazy((force (map2 (+)))  (force s1) (force s2))
 
 let integers = fix(fun x -> Cons(1, add ones x))
-let rez3 = nth (force integers) 6
+let rez3 = nth integers 6
 
 let mul s1 s2 =
     lazy((force (map2 (*)))  (force s1) (force s2))
 let factorials = fix(fun x -> Cons(1, mul integers x))
-let rez4 = nth (force factorials) 4
+let rez4 = nth factorials 4
+
+
+// Seq.initInfinite tests
+let rec factorials2 = seq { yield 1; yield! Seq.initInfinite (fun x -> ( x + 1) * (factorials2 |> Seq.nth x)) }
+let ttt = factorials2 |> Seq.nth 4
