@@ -8,10 +8,10 @@ let ambiguityLabelController : ControllerInstruction list =
     [
         Goto("here")
         Label("here")
-        Assign("a", AssignFromConst(3))
+        Assign("a", FromConst(3))
         Goto("there")
         Label("here")
-        Assign("a", AssignFromConst(4))
+        Assign("a", FromConst(4))
         Goto("there")
         Label("there")
     ]

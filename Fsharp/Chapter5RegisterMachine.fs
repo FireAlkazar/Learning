@@ -14,9 +14,10 @@
         | Const of int
 
     type AssignSource =
-        | AssignFromRegister of string
-        | AssignFromOperation of string*OperationSource*OperationSource
-        | AssignFromConst of int
+        | FromRegister of string
+        | FromOperation of string*OperationSource*OperationSource
+        | FromConst of int
+        | FromLabel of string
 
     type ControllerInstruction =
         | Label of string
@@ -24,6 +25,7 @@
         | Branch of string
         | Assign of string*AssignSource
         | Goto of string
+        | GotoReg of string
         | Save of string
         | Restore of string
 
@@ -31,14 +33,15 @@
 
     type Machine() =  
         let registers = new System.Collections.Generic.Dictionary<string,int>()
-        let labels = new System.Collections.Generic.Dictionary<string,List<ParsedControllerInstruction>>()
+        let labelToIndexMap = new System.Collections.Generic.Dictionary<string,int>()
+        let mutable instructionIndexCounter = -1;
+        let indexToInstructionMap = new System.Collections.Generic.Dictionary<int,ParsedControllerInstruction>()
         let stack = new System.Collections.Generic.Stack<int>()
         let instructions : string list = []
         let mutable operations : Operation list = []
-        let mutable pc : ParsedControllerInstruction list = []
         let advancePc () =
-            if List.isEmpty pc then ()
-            pc <- List.tail pc
+            if registers.["pc"] = -1 then ()
+            registers.["pc"] <- registers.["pc"] - 1
         let getCalcFunc (operationName:string) =
             let operation = List.find (fun x-> x.Name = operationName) operations
             match operation.Func with
@@ -59,9 +62,10 @@
                     fun () ->
                         let resolvedValue =
                             match y with
-                            | AssignFromRegister(r) -> registers.[r]
-                            | AssignFromOperation(op,s1,s2) -> getCalcFunc(op) (getValue(s1)) (getValue(s2))
-                            | AssignFromConst(x) -> x
+                            | FromRegister(r) -> registers.[r]
+                            | FromOperation(op,s1,s2) -> getCalcFunc(op) (getValue(s1)) (getValue(s2))
+                            | FromConst(x) -> x
+                            | FromLabel(x) -> labelToIndexMap.[x]
                         registers.[x] <- resolvedValue
                         advancePc ()
                 | Test(op,s1,s2) -> 
@@ -71,21 +75,26 @@
                        advancePc ()
                 | Branch(x) ->
                     fun () -> 
-                        let labelInstructions = labels.[x]
-                        if registers.["flag"] = 1 then pc <- labelInstructions
+                        let labelInstructions = labelToIndexMap.[x]
+                        if registers.["flag"] = 1 then registers.["pc"] <- labelToIndexMap.[x]
                         else advancePc ()
                 | Goto(x) ->
                     fun () -> 
-                        let labelInstructions = labels.[x]
-                        pc <- labelInstructions
+                        registers.["pc"] <- labelToIndexMap.[x]
+                | GotoReg(x) ->
+                    fun () ->
+                        let regValue = registers.[x]
+                        registers.["pc"] <- regValue
                 | Save(x) -> 
                     fun () -> 
                         let value = registers.[x]
                         stack.Push(value)
+                        printfn "saved register %A %A" x value
                         advancePc ()
                 | Restore(x) ->
                     fun() ->
                         registers.[x] <- stack.Pop()
+                        printfn "restored register %A %A" x (registers.[x])
                         advancePc ()
                 | _ -> failwith "The instruction should not be here"
         let rec extractLabels (insts : ControllerInstruction list) =
@@ -95,27 +104,31 @@
                     match h with
                         | Label(x) -> 
                             let (l,i) = extractLabels t
-                            if labels.ContainsKey(x) then labels.[x] <- i
-                            else labels.Add(x,i)
+                            if labelToIndexMap.ContainsKey(x) then labelToIndexMap.[x] <- instructionIndexCounter
+                            else labelToIndexMap.Add(x,instructionIndexCounter)
                             (h::l,i)
                         | _ -> 
-                            let parsedIntruction = (h,(makeInstruction h))
                             let (l,i) = extractLabels t
+                            let parsedIntruction = (h,(makeInstruction h))
+                            instructionIndexCounter <- instructionIndexCounter + 1
+                            indexToInstructionMap.Add(instructionIndexCounter, parsedIntruction)
                             (l,parsedIntruction::i)
         do
             registers.Add("flag",0)
+            registers.Add("pc",0)
         member this.AllocateRegister(name:string) = registers.Add(name,0)
         member this.LookupRegister(name:string) = registers.[name]
         member this.SetRegister(name,value) = registers.[name] <- value
         member this.InstallOperations(ops) = operations <- ops
         member this.Assemble(controller) =
             let (labels, insts) = extractLabels controller
-            pc <- insts
+            registers.["pc"] <- instructionIndexCounter
         member this.Execute() = 
             let rec recursiveExecute () =
-                if List.isEmpty pc then printfn "done"
+                if registers.["pc"] = -1 then printfn "done"
                 else 
-                    let (_, instructionFunc) = List.head pc
+                    let index = registers.["pc"]
+                    let (_, instructionFunc) = indexToInstructionMap.[index]
                     instructionFunc ()
                     recursiveExecute ()
             recursiveExecute ()

@@ -14,9 +14,9 @@ let gcdController : ControllerInstruction list =
         Label("test-b")
         Test("=", RegisterRef("b"),Const(0))
         Branch("gcd-done")
-        Assign("t", AssignFromOperation("rem",RegisterRef("a"),RegisterRef("b")))
-        Assign("a",AssignFromRegister("b"))
-        Assign("b", AssignFromRegister("t"))
+        Assign("t", FromOperation("rem",RegisterRef("a"),RegisterRef("b")))
+        Assign("a",FromRegister("b"))
+        Assign("b", FromRegister("t"))
         Goto("test-b")
         Label("gcd-done")
     ]
