@@ -65,7 +65,7 @@
     <None Include="FScheme.fsx" />
     <None Include="FindFloorForEachPerson_4_38.fsx" />
     <None Include="AlgorithmsOnSets.fsx" />
-    <None Include="Chapter5Introduction.fsx" />
+    <None Include="Chapter5Code.fsx" />
     <None Include="FactorialMachineDescription_5_2.fsx" />
   </ItemGroup>
   <ItemGroup>
