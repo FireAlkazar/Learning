@@ -37,3 +37,28 @@ let rec printPermutations (x : int list) =
 printPermutations set
 
 
+
+//Get min length subsequence, sub sequence can be in any order
+open System;
+
+let getMinLengthFromStartElement given required = 
+    if List.isEmpty given then -1
+    else
+        try
+            let allIndexes = List.map (fun x -> (List.findIndex (fun y -> y = x) given) + 1) required
+            List.max allIndexes
+        with
+            | _ -> -1
+
+let rec getMinLength given required =
+    if List.isEmpty given then -1
+    else
+        let ind1 = getMinLengthFromStartElement given required
+        let ind2 = getMinLength (List.tail given) required
+        if ind1 > -1 && ind2 > -1 then 
+            Math.Min(ind1,ind2)
+        else
+            Math.Max(ind1,ind2)
+ 
+getMinLength [1;1;3;2;1;1] [1;2;3] //gives 3
+    
