@@ -66,38 +66,26 @@ getMinLength [1;1;3;2;1;1] [1;2;3] //gives 3
 
 //For given N get the number costisting only of ones and zeros, divided by N (for N=7 its 1001)
 open System.Collections.Generic
-let getNext (seq : ResizeArray<int>) =
-    let mutable needTransfer = true
-    let res = new ResizeArray<int>()
-    for i in 0 .. (seq.Count - 1) do
-        let curBit = seq.[i]
-        if needTransfer then
-            if curBit = 0 then
-                res.Add(1)
-                needTransfer <- false
-            else
-                res.Add(0)
-        else
-            res.Add(curBit)
-    if needTransfer then
-        res.Add(1)
-    res
-let getCurNumValue seq =
-    let mutable res = 0;
-    let mutable order = 1;
-    for bit in seq do
+let getEncodedValue (encoded : int64) =
+    let mutable res = 0L;
+    let mutable order = 1L;
+    let mutable shifted = encoded
+    for shift in 0..63 do
+        let bit = shifted &&& 1L
         res <- res + bit*order
-        order <- order*10
+        order <- order*10L
+        shifted <- shifted >>> 1
     res
+
 let getNumberOfOnesAndZeros n =
-    let mutable curNumSeq = new ResizeArray<int>([1])
-    let mutable result = 0
-    while result = 0 do
-        let value = getCurNumValue curNumSeq
-        if value % n = 0 then
+    let mutable curNumEncoded = 1L
+    let mutable result = 0L
+    while result = 0L do
+        let value = getEncodedValue curNumEncoded
+        if value % int64(n) = 0L then
             result <- value
         else 
-            curNumSeq <- getNext curNumSeq
+            curNumEncoded <- curNumEncoded + 1L
     result
 
-let n01 = getNumberOfOnesAndZeros 17
+let n01 = getNumberOfOnesAndZeros 7
