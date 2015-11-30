@@ -62,3 +62,42 @@ let rec getMinLength given required =
  
 getMinLength [1;1;3;2;1;1] [1;2;3] //gives 3
     
+
+
+//For given N get the number costisting only of ones and zeros, divided by N (for N=7 its 1001)
+open System.Collections.Generic
+let getNext (seq : ResizeArray<int>) =
+    let mutable needTransfer = true
+    let res = new ResizeArray<int>()
+    for i in 0 .. (seq.Count - 1) do
+        let curBit = seq.[i]
+        if needTransfer then
+            if curBit = 0 then
+                res.Add(1)
+                needTransfer <- false
+            else
+                res.Add(0)
+        else
+            res.Add(curBit)
+    if needTransfer then
+        res.Add(1)
+    res
+let getCurNumValue seq =
+    let mutable res = 0;
+    let mutable order = 1;
+    for bit in seq do
+        res <- res + bit*order
+        order <- order*10
+    res
+let getNumberOfOnesAndZeros n =
+    let mutable curNumSeq = new ResizeArray<int>([1])
+    let mutable result = 0
+    while result = 0 do
+        let value = getCurNumValue curNumSeq
+        if value % n = 0 then
+            result <- value
+        else 
+            curNumSeq <- getNext curNumSeq
+    result
+
+let n01 = getNumberOfOnesAndZeros 17
