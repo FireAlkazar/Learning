@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace info.fitnesse.fixturegallery
+{
+	public class ColumnFixtureTest : fit.ColumnFixture
+	{
+		public String firstPart;
+		public String secondPart;
+		public String Together
+		{
+			get
+			{
+				return firstPart + ", " + secondPart;
+			}
+		}
+		public int TotalLength()
+		{
+			return firstPart.Length + secondPart.Length;
+		}
+	}
+}
