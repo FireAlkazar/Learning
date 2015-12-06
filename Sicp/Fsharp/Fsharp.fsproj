@@ -71,6 +71,8 @@
     <None Include="Chapter5GcdMachine.fsx" />
     <None Include="AmbigutyLabel_5_8.fsx" />
     <None Include="Chapter5FibonachiMachine.fsx" />
+    <None Include="AdventOfCodePuzzles.fsx" />
+    <Compile Include="AdventOfCodeInputs.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -80,6 +82,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

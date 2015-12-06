@@ -89,3 +89,25 @@ let getNumberOfOnesAndZeros n =
     result
 
 let n01 = getNumberOfOnesAndZeros 7
+
+//Topological sort
+
+let topologicalSort (graph : Map<int,int list>) = 
+    let mutable result = []
+    let inDegree = new System.Collections.Generic.Dictionary<int,int>()
+    for x in graph do
+        let curVertex = x.Key
+        inDegree.[curVertex] <- List.length graph.[curVertex]
+    printfn "%A" inDegree
+    while inDegree.Count > 0 do
+        let noIn = inDegree.
+        result <- List.append result [1]
+    [1]
+let graphToSort = 
+    Map.ofList [
+        0, [1]
+        1, []
+    ]
+
+let sortedGraph = topologicalSort graphToSort
+
