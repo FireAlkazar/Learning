@@ -1,0 +1,23 @@
+!define COMMAND_PATTERN {%m -r fitnesse.fitserver.FitServer,fitsharp\fit.dll %p}
+!define TEST_RUNNER {fitsharp\Runner.exe}
+!path ..\AcceptanceTests\bin\Debug\AcceptanceTests.dll
+
+!|import|
+|AcceptanceTests|
+|Tristan|
+
+!contents -R2 -g -p -f -h
+
+!|Set Up Test Environment|
+
+!|Player Registers|
+|username|password|player id?|
+|johnsmith|test123|>>player|
+
+!|Check Stored Details|
+|player id|username?|balance?|
+|<<player|johnsmith|0|
+
+!|Check Log In|
+|username|password|can log in?|
+|johnsmith|test123|yes|

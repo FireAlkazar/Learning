@@ -1,2 +1,4 @@
-|HelloWorldTest||24:43:59 Сб, дек 05, 2015|
-|FrontPage||24:31:03 Сб, дек 05, 2015|
+|PlayerRegistration||20:54:05 Вс, дек 06, 2015|
+|SpecialFixturesForSymbols||20:35:04 Вс, дек 06, 2015|
+|FrontPage||20:34:33 Вс, дек 06, 2015|
+|HelloWorldTest||20:21:35 Вс, дек 06, 2015|

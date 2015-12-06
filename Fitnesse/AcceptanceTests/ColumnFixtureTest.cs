@@ -1,10 +1,11 @@
-﻿using System;
+﻿using fit;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace info.fitnesse.fixturegallery
+namespace AcceptanceTests
 {
-	public class ColumnFixtureTest : fit.ColumnFixture
+	public class ColumnFixtureTest : ColumnFixture
 	{
 		public String firstPart;
 		public String secondPart;

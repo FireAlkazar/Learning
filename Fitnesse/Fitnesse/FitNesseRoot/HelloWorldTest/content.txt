@@ -2,9 +2,25 @@
 !define TEST_RUNNER {fitsharp\Runner.exe}
 !path ..\AcceptanceTests\bin\Debug\AcceptanceTests.dll
 
+!|import|
+|AcceptanceTests|
+|Tristan|
+
 !contents -R2 -g -p -f -h
-!|info.fitnesse.fixturegallery.ColumnFixtureTest|
+!|ColumnFixtureTest|
 |firstPart|secondPart|together?|totalLength?|
 |Hello|World|Hello, World|10|
 |Houston|We Have a Problem|Houston, We Have a Problem|24|
-|C#|F#|C#, F#|3|
+|C#|F#|C#, F#|4|
+
+!|Comment|
+|Problem|Solution|
+|Need tables, that are not tests| Use "Comment" as table heade|
+
+!|PayoutTable|2000000|
+|Winning Combination|Pool Percentage?|Prize Pool?|
+|6|68|1360000|
+|5|10|200000|
+|4|10|200000|
+|3|12|240000|
+

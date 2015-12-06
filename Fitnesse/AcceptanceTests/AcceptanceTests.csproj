@@ -68,8 +68,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckLogIn.cs" />
+    <Compile Include="PlayerRegisters.cs" />
+    <Compile Include="CheckStoredDetails.cs" />
+    <Compile Include="SetUpTestEnvironment.cs" />
     <Compile Include="ColumnFixtureTest.cs" />
+    <Compile Include="GojkoBook\Tristan\IDraw.cs" />
+    <Compile Include="GojkoBook\Tristan\IDrawManager.cs" />
+    <Compile Include="GojkoBook\Tristan\InitialWinningsCalculator.cs" />
+    <Compile Include="GojkoBook\Tristan\inproc\Draw.cs" />
+    <Compile Include="GojkoBook\Tristan\inproc\DrawManager.cs" />
+    <Compile Include="GojkoBook\Tristan\inproc\PlayerInfo.cs" />
+    <Compile Include="GojkoBook\Tristan\inproc\PlayerManager.cs" />
+    <Compile Include="GojkoBook\Tristan\inproc\PlayerRegistrationInfo.cs" />
+    <Compile Include="GojkoBook\Tristan\inproc\Ticket.cs" />
+    <Compile Include="GojkoBook\Tristan\IPlayerInfo.cs" />
+    <Compile Include="GojkoBook\Tristan\IPlayerManager.cs" />
+    <Compile Include="GojkoBook\Tristan\IPlayerRegistrationInfo.cs" />
+    <Compile Include="GojkoBook\Tristan\ITicket.cs" />
+    <Compile Include="GojkoBook\Tristan\WinningsCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PayoutTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
