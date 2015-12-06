@@ -201,7 +201,67 @@ let te2 = isNiceString2 "uurcxstgmygtbstg"
 
 let niceStrings2CountResult = calculateNiceStringsCount NiceStringsInput isNiceString2
 
+// Day 6
+type LightsInst =
+    {
+        Command: string
+        FromX: int
+        FromY: int
+        ToX: int
+        ToY: int
+    }
+//toggle 461,550 through 564,900
+let parseLightsInst (inst:string) =
+    let parts = inst.Split(' ')
+    if parts.[0] = "turn" then
+        parts.[0] <- parts.[0] + " " + parts.[1]
+        parts.[1] <- parts.[2]
+        parts.[3] <- parts.[4]
+    let from = parts.[1].Split(',') |> Array.map Int32.Parse
+    let toXY = parts.[3].Split(',') |> Array.map Int32.Parse
+    { 
+        Command = parts.[0]
+        FromX = from.[0]
+        FromY = from.[1]
+        ToX = toXY.[0]
+        ToY = toXY.[1]
+    } 
 
+let getLitLightsCount (input:string) = 
+    let rawInsts = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+    let grid = Array2D.init 1000 1000 (fun i j -> false) 
+    for raw in rawInsts do
+        let inst = parseLightsInst raw
+        for i in [inst.FromX..inst.ToX] do
+            for j in [inst.FromY..inst.ToY] do
+                match inst.Command with
+                | "toggle" -> grid.[i,j] <- not grid.[i,j]
+                | "turn off" -> grid.[i,j] <- false
+                | "turn on" -> grid.[i,j] <- true
+                | _ -> failwith "Uncknown command"
 
-//It contains a pair of any two letters that appears at least twice in the string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like aaa (aa, but it overlaps).
-//It contains at least one letter which repeats with exactly one letter between them, like xyx, abcdefeghi (efe), or even aaa.
+    grid |> Seq.cast<bool> |> Seq.filter (fun x -> x) |> Seq.length
+
+// Ancient Nordic Elvish!
+let getTotalLightBrightness (input:string) = 
+    let rawInsts = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+    let grid = Array2D.init 1000 1000 (fun i j -> 0) 
+    for raw in rawInsts do
+        let inst = parseLightsInst raw
+        for i in [inst.FromX..inst.ToX] do
+            for j in [inst.FromY..inst.ToY] do
+                match inst.Command with
+                | "toggle" -> grid.[i,j] <- 2 + grid.[i,j]
+                | "turn off" -> 
+                    grid.[i,j] <- 
+                    if grid.[i,j] = 0 then
+                        0
+                    else 
+                        grid.[i,j] - 1
+                | "turn on" -> grid.[i,j] <- grid.[i,j] + 1
+                | _ -> failwith "Uncknown command"
+
+    grid |> Seq.cast<int> |> Seq.sum
+                
+let litLightsCountResult = getLitLightsCount LightsInstructionsInput
+let lightTotalBrightnessResult = getTotalLightBrightness LightsInstructionsInput
