@@ -268,6 +268,35 @@ let getTotalLightBrightness (input:string) =
 
 // Day 7
 
+let topologicalSort (graph : Map<string,string list>) = 
+    let getZeroKeys (deg: System.Collections.Generic.Dictionary<string,int>) =
+        deg.Keys 
+        |> Seq.filter (fun x -> deg.[x] = 0)
+        |> Seq.toList
+    let getInDegree (graph : Map<string,string list>) (alreadyDone: string list) = 
+        let inDegreeLocal = new System.Collections.Generic.Dictionary<string,int>()
+        let doneAsSet = Set.ofList alreadyDone
+        for x in graph do
+            let curVertex = x.Key
+            if doneAsSet.Contains curVertex then
+                ()
+            else
+                inDegreeLocal.[curVertex] <- 
+                    let curVertexSet = 
+                        graph.[curVertex]
+                        |> Set.ofList
+                    Set.difference curVertexSet doneAsSet
+                    |> Set.count
+        inDegreeLocal
+
+    let mutable result = []
+    let mutable inDegree = getInDegree graph result
+    while inDegree.Count > 0 do
+        let noIn = getZeroKeys inDegree 
+        result <- List.append result noIn
+        inDegree <- getInDegree graph result
+    result
+
 let WireOperators = ["OR";"AND";"LSHIFT";"NOT";"RSHIFT"]
 
 type InstructionPart =
@@ -331,24 +360,62 @@ let getWireId (i:InstructionPart) =
     | WireId(x) -> x
     | _ -> failwith "Can't get wire Id: Type of InstructionPart is not WireId"
 
-let getWireInDegree (insts: InstructionPart list) =
+let getWireConst (i:InstructionPart) =
+    match i with
+    | Const(x) -> x
+    | _ -> failwith "Can't get wire Const: Type of InstructionPart is not Const"
+
+let getWireDependencies (insts: InstructionPart list) =
     insts 
     |> List.filter (fun x -> match x with | WireId(x) -> true | _ -> false)
-    |> List.length
+    |> List.map (fun x -> match x with | WireId(x) -> x | _ -> failwith "Should not be here")
 
+let getWireValue (wireId:string) (all: Map<string,InstructionPart list>) (calculated:Map<string,uint16>) =
+    let getWireValueSimple (exp:InstructionPart) =
+        match exp with
+        | Const(x) -> x
+        | WireId(x) -> calculated.[x]
+        | _ -> failwith "should not be here"
+
+    let insts = all.[wireId]
+    if List.length insts = 1 then
+        getWireValueSimple insts.[0]
+    elif List.length insts = 2 then
+        if insts.[0] <> Operator("NOT") then
+            failwith "NOT expected"
+        else
+            ~~~calculated.[getWireId(insts.[1])]
+    else    
+        let op = insts.[1]
+        let firstOperand = getWireValueSimple insts.[0]
+        let secondOperand = getWireValueSimple insts.[2]
+        match op with 
+        | Operator("AND") ->
+            firstOperand &&& secondOperand
+        | Operator("OR") ->
+            firstOperand ||| secondOperand
+        | Operator("LSHIFT") ->
+            firstOperand <<< int32(secondOperand)
+        | Operator("RSHIFT") ->
+            firstOperand >>> int32(secondOperand)
+        | _ -> failwith "Unknown operator"
+    
 let parseAllWires (input:string) =
-    let insts = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
-                |> Array.map parseWireInstruction
-                |> Array.map (fun x -> (getWireId(fst x), snd x))
-                |> dict
-    insts
+    let insts = 
+        input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+        |> Array.map parseWireInstruction
+        |> Array.map (fun x -> (getWireId(fst x), snd x))
+    let mapped = Map(insts)
+    let forTsort = insts |> Array.map (fun x -> (fst x, getWireDependencies(snd x)))
+    let sorted = topologicalSort (Map(forTsort))
+    //printfn "%A" sorted
+    let mutable calculated = Map.empty
+    for wireId in sorted do
+        let wireValue = getWireValue wireId mapped calculated
+        printfn "%A -- %A" wireId wireValue
+        calculated <- calculated |> Map.add wireId wireValue
+    calculated
 
-
-
-
-let k = parseWireInstruction "lf AND lq -> ls"
-let kk = parseWireInstruction "123 -> ls"
-let kkk = parseWireInstruction "ls -> a"
 let testResult = (parseAllWires WiresInstructionsInput)
 
 

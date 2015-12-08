@@ -92,22 +92,42 @@ let n01 = getNumberOfOnesAndZeros 7
 
 //Topological sort
 
-let topologicalSort (graph : Map<int,int list>) = 
+let topologicalSort (graph : Map<string,string list>) = 
+    let getZeroKeys (deg: System.Collections.Generic.Dictionary<string,int>) =
+        deg.Keys 
+        |> Seq.filter (fun x -> deg.[x] = 0)
+        |> Seq.toList
+    let getInDegree (graph : Map<string,string list>) (alreadyDone: string list) = 
+        let inDegreeLocal = new System.Collections.Generic.Dictionary<string,int>()
+        let doneAsSet = Set.ofList alreadyDone
+        for x in graph do
+            let curVertex = x.Key
+            if doneAsSet.Contains curVertex then
+                ()
+            else
+                inDegreeLocal.[curVertex] <- 
+                    let curVertexSet = 
+                        graph.[curVertex]
+                        |> Set.ofList
+                    Set.difference curVertexSet doneAsSet
+                    |> Set.count
+        inDegreeLocal
+
     let mutable result = []
-    let inDegree = new System.Collections.Generic.Dictionary<int,int>()
-    for x in graph do
-        let curVertex = x.Key
-        inDegree.[curVertex] <- List.length graph.[curVertex]
-    printfn "%A" inDegree
+    let mutable inDegree = getInDegree graph result
     while inDegree.Count > 0 do
-        let noIn = inDegree.
-        result <- List.append result [1]
-    [1]
+        let noIn = getZeroKeys inDegree 
+        result <- List.append result noIn
+        printfn "%A" result
+        inDegree <- getInDegree graph result
+    result
 let graphToSort = 
     Map.ofList [
-        0, [1]
-        1, []
+        "a", ["b"]
+        "c", ["a"]
+        "b", []
     ]
 
 let sortedGraph = topologicalSort graphToSort
+
 
