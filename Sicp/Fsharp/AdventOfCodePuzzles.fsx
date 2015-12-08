@@ -263,5 +263,92 @@ let getTotalLightBrightness (input:string) =
 
     grid |> Seq.cast<int> |> Seq.sum
                 
-let litLightsCountResult = getLitLightsCount LightsInstructionsInput
-let lightTotalBrightnessResult = getTotalLightBrightness LightsInstructionsInput
+//let litLightsCountResult = getLitLightsCount LightsInstructionsInput
+//let lightTotalBrightnessResult = getTotalLightBrightness LightsInstructionsInput
+
+// Day 7
+
+let WireOperators = ["OR";"AND";"LSHIFT";"NOT";"RSHIFT"]
+
+type InstructionPart =
+    | WireId of string
+    | Operator of string
+    | Arrow
+    | Const of uint16
+
+let (|WireConst|_|) str =
+    match System.Int32.TryParse(str) with
+    | (true,int) -> Some(Const(uint16(int)))
+    | _ -> None
+
+let (|WireOperator|_|) str =
+    if List.contains str WireOperators then
+        Some(Operator(str))
+    else
+        None
+
+let (|WireArrow|_|) str =
+    if str = "->" then
+        Some(Arrow)
+    else
+        None
+
+let parseWireInstructionPart (part:string) =
+    match part with
+    | WireConst x -> x
+    | WireOperator x -> x
+    | WireArrow x -> x
+    | x -> WireId(x)
+
+let rec getWireDestination (parts: InstructionPart list) =
+    match parts with
+    | [] -> failwith "Wire destination not found"
+    | x::xs ->
+        if x = Arrow then
+            List.head xs
+        else
+            getWireDestination xs
+
+let getWireSource (parts: InstructionPart list) =
+    let rec getWireSourceRec (parts: InstructionPart list) (acc: InstructionPart list) =
+        match parts with
+            | [] -> failwith "Wire source not found"
+            | x::xs ->
+                if x = Arrow then
+                    List.rev acc
+                else
+                    getWireSourceRec xs (x::acc)
+    getWireSourceRec parts []
+
+let parseWireInstruction (input:string) = 
+    let parts = input.Split(' ')
+                |> Array.toList
+                |> List.map parseWireInstructionPart
+    (getWireDestination(parts), getWireSource(parts))
+
+let getWireId (i:InstructionPart) =
+    match i with
+    | WireId(x) -> x
+    | _ -> failwith "Can't get wire Id: Type of InstructionPart is not WireId"
+
+let getWireInDegree (insts: InstructionPart list) =
+    insts 
+    |> List.filter (fun x -> match x with | WireId(x) -> true | _ -> false)
+    |> List.length
+
+let parseAllWires (input:string) =
+    let insts = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+                |> Array.map parseWireInstruction
+                |> Array.map (fun x -> (getWireId(fst x), snd x))
+                |> dict
+    insts
+
+
+
+
+let k = parseWireInstruction "lf AND lq -> ls"
+let kk = parseWireInstruction "123 -> ls"
+let kkk = parseWireInstruction "ls -> a"
+let testResult = (parseAllWires WiresInstructionsInput)
+
+
