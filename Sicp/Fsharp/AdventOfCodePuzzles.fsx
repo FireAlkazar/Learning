@@ -408,14 +408,43 @@ let parseAllWires (input:string) =
     let mapped = Map(insts)
     let forTsort = insts |> Array.map (fun x -> (fst x, getWireDependencies(snd x)))
     let sorted = topologicalSort (Map(forTsort))
+    let mutable calculated = Map.empty
+    for wireId in sorted do
+        let wireValue = getWireValue wireId mapped calculated
+        calculated <- calculated |> Map.add wireId wireValue
+    calculated
+
+let parseAllWires2 (input:string) =
+    let insts = 
+        input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+        |> Array.map parseWireInstruction
+        |> Array.map (fun x -> (getWireId(fst x), snd x))
+    let mapped = Map(insts)
+    let forTsort = insts |> Array.map (fun x -> (fst x, getWireDependencies(snd x)))
+    let sorted = topologicalSort (Map(forTsort))
     //printfn "%A" sorted
     let mutable calculated = Map.empty
     for wireId in sorted do
         let wireValue = getWireValue wireId mapped calculated
-        printfn "%A -- %A" wireId wireValue
+        calculated <- calculated |> Map.add wireId wireValue
+    
+    let savedA = calculated.["a"]
+    calculated <- Map.empty
+    for wireId in sorted do
+        let wireValue = 
+            if wireId = "b" then
+                savedA
+            else
+                getWireValue wireId mapped calculated
         calculated <- calculated |> Map.add wireId wireValue
     calculated
 
-let testResult = (parseAllWires WiresInstructionsInput)
+let wiresResult = (parseAllWires WiresInstructionsInput)
+let wiresResult2 = (parseAllWires2 WiresInstructionsInput)
 
+// Day 8
 
+let santaListLengthCode = SantaListInput.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries) |> Array.sumBy (fun x -> x.Length)
+let santaListLengthMemory = SantaListInput2 |> List.sumBy (fun x -> x.Length)
+let satntaListResult = santaListLengthCode - santaListLengthMemory
+let santaListLengthCodeTask2 = SantaListInputTask2.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries) |> Array.sumBy (fun x -> x.Length)
