@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckLogIn.cs" />
+    <Compile Include="TestConcatenation.cs" />
+    <Compile Include="PurchaseTicket.cs" />
     <Compile Include="PlayerRegisters.cs" />
     <Compile Include="CheckStoredDetails.cs" />
     <Compile Include="SetUpTestEnvironment.cs" />

@@ -1,0 +1,15 @@
+!define COMMAND_PATTERN {%m -r fitnesse.fitserver.FitServer,fitsharp\fit.dll %p}
+!define TEST_RUNNER {fitsharp\Runner.exe}
+!path ..\AcceptanceTests\bin\Debug\AcceptanceTests.dll
+
+!|import|
+|AcceptanceTests|
+
+!|ActionFixture|
+|start|TestConcatenation|
+|enter|first string|Hel|
+|enter|second string|lo|
+|check|concatenate|Hello|
+|press|clear|
+|check|first string|blank|
+

@@ -9,6 +9,7 @@
 !contents -R2 -g -p -f -h
 
 !|Set Up Test Environment|
+|Empty|
 
 !|Player Registers|
 |username|password|player id?|

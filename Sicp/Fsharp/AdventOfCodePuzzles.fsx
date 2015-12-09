@@ -448,3 +448,4 @@ let santaListLengthCode = SantaListInput.Split([|Environment.NewLine|], StringSp
 let santaListLengthMemory = SantaListInput2 |> List.sumBy (fun x -> x.Length)
 let satntaListResult = santaListLengthCode - santaListLengthMemory
 let santaListLengthCodeTask2 = SantaListInputTask2.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries) |> Array.sumBy (fun x -> x.Length)
+let satntaListResultTask2 = santaListLengthCodeTask2 - santaListLengthCode

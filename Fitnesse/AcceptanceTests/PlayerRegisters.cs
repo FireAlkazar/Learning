@@ -10,6 +10,24 @@ namespace AcceptanceTests
 {
 	public class PlayerRegisters : ColumnFixture
 	{
+		public class ExtendedPlayerRegistrationInfo : PlayerRegistrationInfo
+		{
+			public int PlayerId()
+			{
+				return SetUpTestEnvironment.playerManager.RegisterPlayer(this);
+			}
+		}
+
+		private ExtendedPlayerRegistrationInfo to = new ExtendedPlayerRegistrationInfo();
+
+		public override object GetTargetObject()
+		{
+			return to;
+		}
+	}
+
+	public class PlayerRegistersOld : ColumnFixture
+	{
 		public string Username;
 		public string Password;
 		public int PlayerId()

@@ -9,13 +9,26 @@ using Tristan.inproc;
 
 namespace AcceptanceTests
 {
-	public class SetUpTestEnvironment : Fixture
+	public class SetUpTestEnvironment : ColumnFixture
 	{
 		internal static IPlayerManager playerManager;
+		internal static IDrawManager drawManager;
+
 		public SetUpTestEnvironment()
 		{
 			playerManager = new PlayerManager();
+			drawManager = new DrawManager(playerManager);
+		}
+
+		public void Empty(string arg)
+		{ }
+
+		public DateTime CreateDraw
+		{
+			set
+			{
+				drawManager.CreateDraw(value);
+			}
 		}
 	}
-
 }
