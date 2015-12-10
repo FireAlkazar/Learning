@@ -1,2 +1,2 @@
-java -jar fitnesse-standalone.jar
+java -jar fitnesse-standalone.jar -p 8080
 pause

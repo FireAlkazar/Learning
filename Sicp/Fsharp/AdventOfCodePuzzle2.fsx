@@ -107,3 +107,32 @@ let getLongestPath =
         let curCityMax = getLongestPathWithStartCity curCity routes citiesToVisit
         maxDistance <- max maxDistance curCityMax
     maxDistance
+
+// Day 10
+let lookAndSayInput = "1113222113"
+
+let lookAndSayOnce (look:string) = 
+    let mutable curDigit = look.[0];
+    let mutable result = "";
+    let mutable curCount = 0;
+    for digit in look do
+        if curDigit = digit then
+            curCount <- curCount + 1
+        else
+            result <- result + curCount.ToString() + curDigit.ToString()
+            curDigit <- digit
+            curCount <- 1
+    result <- result + curCount.ToString() + curDigit.ToString()
+    result
+
+let lookAndSay (input:string) (applyTimes:int) =
+    let mutable r = input
+    for i in [1..applyTimes] do
+        printfn "%d" i
+        r <- lookAndSayOnce r
+    r.Length
+
+
+//let lookAndSayResult = lookAndSay lookAndSayInput 50
+
+            
