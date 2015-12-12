@@ -128,11 +128,69 @@ let lookAndSayOnce (look:string) =
 let lookAndSay (input:string) (applyTimes:int) =
     let mutable r = input
     for i in [1..applyTimes] do
-        printfn "%d" i
         r <- lookAndSayOnce r
     r.Length
 
-
 //let lookAndSayResult = lookAndSay lookAndSayInput 50
 
-            
+// Day 11
+let getNextChar (ch:char) =
+    if ch = 'z' then
+        'a'
+    else
+        char(int(ch) + 1)
+let getNextPassword (input:string) = 
+    let chars = input.ToCharArray()
+    let mutable continueLoop = true
+    let mutable index = chars.Length-1 
+    while continueLoop do
+        let curChar = chars.[index]
+        let nextChar = getNextChar curChar
+        chars.[index] <- nextChar
+        if nextChar = 'a' then
+            index <- index - 1
+        else
+            continueLoop <- false
+    new System.String(chars)
+
+let rec passwordHasThreeConsequtiveChars (input:string) =
+    if input.Length < 3 then
+        false
+    else
+        if int(input.[0]) + 1 = int(input.[1]) && int(input.[1]) = int(input.[2]) - 1 then
+            true
+        else
+             passwordHasThreeConsequtiveChars (input.Substring(1))
+
+let passwordHasNoForbiddenChars (input:string) =
+    let forbidden = ["i";"o";"l"]
+    forbidden
+    |> List.exists (fun x -> input.Contains(x) = false)
+
+let rec passwordHasDifferentPairs (input: string) (numberOfPairs:int) =
+    if numberOfPairs = 0 then
+        true
+    elif input.Length < 2 then
+        false
+    else
+        if input.[0] = input.[1] then
+            passwordHasDifferentPairs (input.Substring(2)) (numberOfPairs - 1)
+        else
+            passwordHasDifferentPairs (input.Substring(1)) numberOfPairs
+
+let getNewSantaPassword (oldSantaPassword:string) = 
+    let rec getNew (password:string) =
+        if passwordHasThreeConsequtiveChars password &&
+            passwordHasNoForbiddenChars password &&
+            passwordHasDifferentPairs password 2 then
+                password
+        else
+            getNew (getNextPassword password)
+    getNew (getNextPassword oldSantaPassword)
+
+let t = getNextPassword "az"
+let t1 = passwordHasDifferentPairs "zzzabbd" 2
+        
+let SantaPasswordInput = "hepxcrrq"
+let SantaNewPasswordResult = getNewSantaPassword SantaPasswordInput
+let SantaAnotherNewPassword = getNewSantaPassword SantaNewPasswordResult
