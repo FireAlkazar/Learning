@@ -113,17 +113,17 @@ let lookAndSayInput = "1113222113"
 
 let lookAndSayOnce (look:string) = 
     let mutable curDigit = look.[0];
-    let mutable result = "";
+    let result = new System.Text.StringBuilder();
     let mutable curCount = 0;
     for digit in look do
         if curDigit = digit then
             curCount <- curCount + 1
         else
-            result <- result + curCount.ToString() + curDigit.ToString()
+            result.Append(curCount).Append(curDigit) |> ignore
             curDigit <- digit
             curCount <- 1
-    result <- result + curCount.ToString() + curDigit.ToString()
-    result
+    result.Append(curCount).Append(curDigit) |> ignore
+    result.ToString()
 
 let lookAndSay (input:string) (applyTimes:int) =
     let mutable r = input
