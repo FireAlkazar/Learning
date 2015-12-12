@@ -187,10 +187,139 @@ let getNewSantaPassword (oldSantaPassword:string) =
         else
             getNew (getNextPassword password)
     getNew (getNextPassword oldSantaPassword)
-
-let t = getNextPassword "az"
-let t1 = passwordHasDifferentPairs "zzzabbd" 2
         
 let SantaPasswordInput = "hepxcrrq"
 let SantaNewPasswordResult = getNewSantaPassword SantaPasswordInput
 let SantaAnotherNewPassword = getNewSantaPassword SantaNewPasswordResult
+
+// Day 12
+open System
+type Json = 
+    | JsonObject of Map<string,Json>
+    | JsonArray of Json list
+    | JsonString of string
+    | JsonInt of int
+
+let isJsonArray (exp:char list) =
+    exp.[0] = '['
+    
+let isJsonObject (exp:char list) = 
+    exp.[0] = '{'
+
+let toStr (chars: char list) = 
+    let charArray = chars |> List.toArray
+    new String(charArray) 
+
+let rec extractJsonInt (exp:char list) =
+    match exp with
+    | '-'::xs -> 
+        let num,rest = extractJsonInt(xs)
+        ('-'::num,rest)
+    | d::xs when System.Char.IsDigit(d) -> 
+        let num,rest = extractJsonInt(xs)
+        (d::num,rest)
+    | _ -> ([], exp)
+
+let extractJsonString (exp:char list)=
+    let rec extract (exp:char list) (acc: char list) =
+        match exp with
+        | '"'::xs -> 
+            if acc = [] then
+                extract xs []
+            else
+                ([], xs)
+        | d::xs -> 
+            if Char.IsWhiteSpace(d) && acc = [] then
+                extract xs acc
+            else
+                let str,rest = extract xs (d::acc)
+                (d::str,rest)
+        | _ -> failwith "extactJsonString fail"
+    extract exp []
+let t = extractJsonString ("\"abc\", xxx".ToCharArray() |> Array.toList)
+
+let rec removeHeadingColon (input:char list) =
+    match input with
+    | x::xs when Char.IsWhiteSpace(x) ->
+        removeHeadingColon xs
+    | ':'::xs -> 
+        xs
+    | _ -> failwith "removeHeadingSemicolon fail"
+
+let rec extractJsonObject (obj:char list) (acc:(string*Json) list) =
+    match obj with
+    | x::xs when System.Char.IsWhiteSpace(x) ->
+        extractJsonObject xs acc
+    | '{'::xs ->
+        let keyValue,rest = extractJsonObjectKeyValuePair xs
+        extractJsonObject rest (keyValue::acc)
+    | ','::xs ->
+        let keyValue,rest = extractJsonObjectKeyValuePair xs
+        extractJsonObject rest (keyValue::acc)
+    | '}'::xs ->
+        (acc,xs)
+    | _ -> failwith "extractJsonObject fail"
+and extractJsonObjectKeyValuePair (obj:char list) =
+    let key,restAfterKey= extractJsonString obj
+    let afterColon = removeHeadingColon restAfterKey
+    let json,rest = parseJson afterColon
+    ((toStr(key),json),rest)
+and extractJsonArray (ar:char list) (acc:Json list) =
+    //printfn "%A" ar
+    match ar with
+    | x::xs when System.Char.IsWhiteSpace(x) ->
+        extractJsonArray xs acc
+    | '['::xs ->
+        let json,rest = parseJson xs
+        extractJsonArray rest (json::acc)
+    | ','::xs ->
+        let json,rest = parseJson xs
+        extractJsonArray rest (json::acc)
+    | ']'::xs ->
+        (acc,xs)
+    | _ -> failwith "extractJsonArray fail"
+and parseJson (input:char list) =
+    if isJsonArray input then
+        let jsonArray,rest = extractJsonArray input []
+        (JsonArray(jsonArray),rest)
+    elif isJsonObject input then
+        let jsonObjPairs,rest = extractJsonObject input []
+        (JsonObject(Map(jsonObjPairs)),rest)
+    else
+        let num,rest = extractJsonInt input
+        if num = [] then
+            let str,rest = extractJsonString input
+            (JsonString(toStr(str)),rest)
+        else
+            (JsonInt(System.Int32.Parse(toStr(num))), rest)
+let parseJsonString (input:string) =
+    parseJson (input.ToCharArray() |> Array.toList )
+
+let rec calculateJsonSum (json:Json) : int = 
+    match json with
+    | JsonObject(x) ->
+        x |> Seq.sumBy (fun y -> calculateJsonSum (y.Value))
+    | JsonArray(x) ->
+        x |> Seq.sumBy (fun y -> calculateJsonSum y)
+    | JsonString(x) -> 0
+    | JsonInt(x) -> x
+
+let rec calculateJsonSumExludingRedObject (json:Json) : int = 
+    match json with
+    | JsonObject(x) ->
+        //printfn "%A" x
+        if x.ContainsKey "red" then
+            0
+        else
+            x |> Seq.sumBy (fun y -> calculateJsonSumExludingRedObject (y.Value))
+    | JsonArray(x) ->
+        x |> Seq.sumBy (fun y -> calculateJsonSumExludingRedObject y)
+    | JsonString(x) -> 0
+    | JsonInt(x) -> x
+
+#load "AdventOfCodeInputs.fs"
+open AdventOfCodeInputs
+let AccountantJsonResult = calculateJsonSum (fst (parseJsonString AccountantJsonInput))
+let AccountantJsonResult2 = calculateJsonSumExludingRedObject (fst (parseJsonString "[1,{\"red\":2}]"))
+
+
