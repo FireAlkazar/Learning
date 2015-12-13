@@ -1,0 +1,8 @@
+|Purchase Ticket|
+|Player|john|Deposits|100|dollars with card|4111111111111111|and expiry date|01/12|
+|Check|Player|john|has|100|dollars|100|
+|Player|john|buys a ticket with numbers|1,3,4,5,8,10| for draw on|01/01/2008|
+|Pool value for draw on |01/01/2008|is|10|dollars|
+|Check|Player|john|has|90|dollars|90|
+|Ticket with numbers|1,3,4,5,8,10| for |10| dollars is registered for player|john| for draw on |01/01/2008|
+|Note| There are other key words: fail, not|

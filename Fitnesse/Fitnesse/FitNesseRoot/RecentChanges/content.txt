@@ -1,5 +1,16 @@
+|PurchaseTicketSuite||23:41:13 Вс, дек 13, 2015|
+|FrontPage||23:40:50 Вс, дек 13, 2015|
+|MarkupVariables||23:38:38 Вс, дек 13, 2015|
+|IncludeAnotherPage||23:31:13 Вс, дек 13, 2015|
+|SubWiki.SubSubWiki||23:24:26 Вс, дек 13, 2015|
+|SubWiki||23:23:30 Вс, дек 13, 2015|
+|SomePage||23:20:56 Вс, дек 13, 2015|
+|FrontPage.SomePage||23:17:32 Вс, дек 13, 2015|
+|SubWiki.SomePage||23:16:52 Вс, дек 13, 2015|
+|SubWiki.SubSubWiki.SomePage||23:16:05 Вс, дек 13, 2015|
+|PurchaseTicketSuite.BasicCase||22:05:14 Вс, дек 13, 2015|
+|PurchaseTicketSuite.SetUp||21:55:07 Вс, дек 13, 2015|
 |ActionFixtureTest||01:44:34 Чт, дек 10, 2015|
-|FrontPage||01:44:09 Чт, дек 10, 2015|
 |PurchaseTicketFirstTry||01:10:14 Чт, дек 10, 2015|
 |PlayerRegistration||24:14:39 Чт, дек 10, 2015|
 |SpecialFixturesForSymbols||20:35:04 Вс, дек 06, 2015|

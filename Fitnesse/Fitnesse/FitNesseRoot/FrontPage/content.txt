@@ -18,3 +18,15 @@ PlayerRegistration
 SpecialFixturesForSymbols
 PurchaseTicketFirstTry
 ActionFixtureTest
+
+suite
+PurchaseTicketSuite
+PurchaseTicketSuite.SetUp
+
+subwikis
+SubWiki
+SomePage
+IncludeAnotherPage
+
+misc
+MarkupVariables

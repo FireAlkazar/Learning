@@ -1,0 +1,6 @@
+!define username {JOHN}
+
+Usage - without blanks $ { username } will give ${username}
+
+Usefull link - http://www.fitnesse.org/FitNesse.UserGuide.WritingAcceptanceTests.AcceptanceTestPatterns.ParameterizedIncludes
+

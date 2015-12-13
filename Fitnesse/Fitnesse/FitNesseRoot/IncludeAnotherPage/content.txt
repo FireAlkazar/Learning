@@ -1,0 +1,5 @@
+!include -c .HelloWorldTest
+
+|Special markup|Usage|
+|!define COLLAPSE_SETUP {true}| Collapse special page setUp. Use in main suite test page|
+|!define COLLAPSE_TEARDOWN {true}| Same but for tearDown|

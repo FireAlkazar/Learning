@@ -1,0 +1,11 @@
+!|import|
+|AcceptanceTests|
+|Tristan|
+
+|Set Up Test Environment|
+|Create Draw|
+|01/01/2008|
+
+|Player Registers|
+|username|password|name|address|city|postcode|country|player id?|
+|john|test123|John Smith|44 Ranelagh Way|London|NN1EE1|UK|>>player|
