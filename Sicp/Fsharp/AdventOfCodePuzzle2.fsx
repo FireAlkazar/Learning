@@ -307,8 +307,7 @@ let rec calculateJsonSum (json:Json) : int =
 let rec calculateJsonSumExludingRedObject (json:Json) : int = 
     match json with
     | JsonObject(x) ->
-        //printfn "%A" x
-        if x.ContainsKey "red" then
+        if Map.exists (fun y z -> z = JsonString("red")) x then
             0
         else
             x |> Seq.sumBy (fun y -> calculateJsonSumExludingRedObject (y.Value))
@@ -319,7 +318,40 @@ let rec calculateJsonSumExludingRedObject (json:Json) : int =
 
 #load "AdventOfCodeInputs.fs"
 open AdventOfCodeInputs
-let AccountantJsonResult = calculateJsonSum (fst (parseJsonString AccountantJsonInput))
-let AccountantJsonResult2 = calculateJsonSumExludingRedObject (fst (parseJsonString "[1,{\"red\":2}]"))
+//let AccountantJsonResult = calculateJsonSum (fst (parseJsonString AccountantJsonInput))
+//let AccountantJsonResult2 = calculateJsonSumExludingRedObject (fst (parseJsonString AccountantJsonInput))
 
+// Day 13
+let distrib e L =
+    let rec aux pre post = 
+        seq {
+            match post with
+            | [] -> yield (L @ [e])
+            | h::t -> yield (List.rev pre @ [e] @ post)
+                      yield! aux (h::pre) t 
+        }
+    aux [] L
+
+let rec perms = function 
+    | [] -> Seq.singleton []
+    | h::t -> Seq.collect (distrib h) (perms t)
+
+type HappyLevelRecord = { Person: string; Level:int; IfNeigbor:string}
+
+let parseHappy (line:string) =
+    let parts = line.Split(' ')
+    { Person=parts.[0]; Level=Int32.Parse(parts.[1]); IfNeigbor= parts.[1]}
+
+let calcMaxDinnerHappiness (input:string) = 
+    let happinessLines = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+    let table = happinessLines |> Array.map parseHappy |> Array.toList
+    let persons = table |> List.map (fun x -> x.Person ) |> List.distinct
+    persons
+
+let calculateDinnerHappiness (table: HappyLevelRecord) (permutation:int list) (persons:string list) =
+    
+
+let rez = calcMaxDinnerHappiness DinnerTableInput
+            
+    
 
