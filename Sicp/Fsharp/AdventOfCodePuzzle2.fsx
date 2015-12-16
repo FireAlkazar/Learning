@@ -336,20 +336,36 @@ let rec perms = function
     | [] -> Seq.singleton []
     | h::t -> Seq.collect (distrib h) (perms t)
 
-type HappyLevelRecord = { Person: string; Level:int; IfNeigbor:string}
+type HappyLevelRecord = { Person: string; Level:int; Neighbor:string}
 
 let parseHappy (line:string) =
     let parts = line.Split(' ')
-    { Person=parts.[0]; Level=Int32.Parse(parts.[1]); IfNeigbor= parts.[1]}
+    { Person=parts.[0]; Level=Int32.Parse(parts.[1]); Neighbor= parts.[2]}
+
+let calculateDinnerHappiness (table: HappyLevelRecord list) (persons:string list) =
+    let numberOfPersons = List.length persons
+    let mutable totalHappiness = 0
+    for positionIndex in [0..numberOfPersons - 1] do
+        let person = persons.[positionIndex]
+        let neighborIndex1 = if positionIndex = 0 then numberOfPersons - 1 else positionIndex - 1
+        let neighborIndex2 = if positionIndex = numberOfPersons - 1 then 0 else positionIndex + 1
+        let neighbor1 = persons.[neighborIndex1]
+        let neighbor2 = persons.[neighborIndex2]
+        totalHappiness <- (List.find (fun x -> x.Person = person && x.Neighbor = neighbor1) table).Level
+        totalHappiness <- (List.find (fun x -> x.Person = person && x.Neighbor = neighbor2) table).Level
+    totalHappiness
 
 let calcMaxDinnerHappiness (input:string) = 
     let happinessLines = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
     let table = happinessLines |> Array.map parseHappy |> Array.toList
     let persons = table |> List.map (fun x -> x.Person ) |> List.distinct
-    persons
-
-let calculateDinnerHappiness (table: HappyLevelRecord) (permutation:int list) (persons:string list) =
-    
+    let personPerms = perms persons
+    let mutable hap = Int32.MinValue
+    printfn "%A" personPerms
+    for positions in personPerms do
+        let curHap = calculateDinnerHappiness table positions
+        hap <- max hap curHap
+    hap
 
 let rez = calcMaxDinnerHappiness DinnerTableInput
             
