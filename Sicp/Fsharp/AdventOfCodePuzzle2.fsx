@@ -351,23 +351,30 @@ let calculateDinnerHappiness (table: HappyLevelRecord list) (persons:string list
         let neighborIndex2 = if positionIndex = numberOfPersons - 1 then 0 else positionIndex + 1
         let neighbor1 = persons.[neighborIndex1]
         let neighbor2 = persons.[neighborIndex2]
-        totalHappiness <- (List.find (fun x -> x.Person = person && x.Neighbor = neighbor1) table).Level
-        totalHappiness <- (List.find (fun x -> x.Person = person && x.Neighbor = neighbor2) table).Level
+        totalHappiness <- totalHappiness + (List.find (fun x -> x.Person = person && x.Neighbor = neighbor1) table).Level
+        totalHappiness <- totalHappiness + (List.find (fun x -> x.Person = person && x.Neighbor = neighbor2) table).Level
     totalHappiness
 
-let calcMaxDinnerHappiness (input:string) = 
+let parseDinnerTable (input:string) =
     let happinessLines = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
-    let table = happinessLines |> Array.map parseHappy |> Array.toList
+    happinessLines |> Array.map parseHappy |> Array.toList
+
+let calcMaxDinnerHappiness  (table: HappyLevelRecord list) = 
     let persons = table |> List.map (fun x -> x.Person ) |> List.distinct
     let personPerms = perms persons
     let mutable hap = Int32.MinValue
-    printfn "%A" personPerms
     for positions in personPerms do
         let curHap = calculateDinnerHappiness table positions
         hap <- max hap curHap
     hap
 
-let rez = calcMaxDinnerHappiness DinnerTableInput
+let addMyselfToDinnerTable (table: HappyLevelRecord list) =
+    let persons = table |> List.map (fun x -> x.Person ) |> List.distinct
+    let recordsWithMe = persons |> List.map (fun x -> {Person="Me";Level=0;Neighbor=x})
+    List.append table recordsWithMe
+
+let maxDinnerHappiness = calcMaxDinnerHappiness (parseDinnerTable DinnerTableInput)
+let maxDinnerHappinessWithMe = calcMaxDinnerHappiness (addMyselfToDinnerTable (parseDinnerTable DinnerTableInput))
             
     
 
