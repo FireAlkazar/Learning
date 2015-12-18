@@ -371,10 +371,32 @@ let calcMaxDinnerHappiness  (table: HappyLevelRecord list) =
 let addMyselfToDinnerTable (table: HappyLevelRecord list) =
     let persons = table |> List.map (fun x -> x.Person ) |> List.distinct
     let recordsWithMe = persons |> List.map (fun x -> {Person="Me";Level=0;Neighbor=x})
-    List.append table recordsWithMe
+    let recordsWithMeAsNeighbor = persons |> List.map (fun x -> {Person=x;Level=0;Neighbor="Me"})
+    List.append (List.append table recordsWithMe) recordsWithMeAsNeighbor
 
-let maxDinnerHappiness = calcMaxDinnerHappiness (parseDinnerTable DinnerTableInput)
-let maxDinnerHappinessWithMe = calcMaxDinnerHappiness (addMyselfToDinnerTable (parseDinnerTable DinnerTableInput))
+//let maxDinnerHappiness = calcMaxDinnerHappiness (parseDinnerTable DinnerTableInput)
+//let maxDinnerHappinessWithMe = calcMaxDinnerHappiness (addMyselfToDinnerTable (parseDinnerTable DinnerTableInput))
             
-    
+//Day 14
+let getMaxDistanse (paramss:int list) =
+    let speed = paramss.[0]
+    let flyTime = paramss.[1]
+    let restTime = paramss.[2]
+    let totalTime = 2503
+    let fullTimeFliesCount = totalTime / (flyTime + restTime)
+    let partialTimeFly = totalTime % (flyTime + restTime)
+    let lastFlyTime = min partialTimeFly flyTime
+    fullTimeFliesCount*flyTime*speed + lastFlyTime*speed
+let DeerParamsInput = [
+    [27;5;132]
+    [22;2;41]
+    [11;5;48]
+    [28;5;134]
+    [4;16;55]
+    [14;3;38]
+    [3;21;40]
+    [18;6;103]
+    [18;5;84]
+]
+let deerMaxPath = List.map getMaxDistanse DeerParamsInput |> List.max
 
