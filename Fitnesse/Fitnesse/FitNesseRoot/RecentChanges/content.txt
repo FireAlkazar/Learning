@@ -1,6 +1,8 @@
+|CollapsableBlocks||22:27:31 Вс, дек 20, 2015|
+|FrontPage||22:26:42 Вс, дек 20, 2015|
+|PurchaseTicketSuite.SuiteSetUp||22:17:35 Вс, дек 20, 2015|
 |HelloWorldTest.PageHeader||22:12:09 Вс, дек 20, 2015|
 |HelloWorldTest.PageFooter||22:11:25 Вс, дек 20, 2015|
-|FrontPage||22:09:48 Вс, дек 20, 2015|
 |||22:04:34 Вс, дек 20, 2015|
 |HelloWorldTest||22:03:23 Вс, дек 20, 2015|
 |PurchaseTicketSuite||23:41:13 Вс, дек 13, 2015|

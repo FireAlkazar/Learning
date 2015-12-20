@@ -31,3 +31,4 @@ IncludeAnotherPage
 
 misc
 MarkupVariables
+CollapsableBlocks

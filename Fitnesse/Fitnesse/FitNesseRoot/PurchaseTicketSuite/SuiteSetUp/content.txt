@@ -1,0 +1,2 @@
+!contents -R2 -g -p -f -h
+Executed only once before tests in the suite started

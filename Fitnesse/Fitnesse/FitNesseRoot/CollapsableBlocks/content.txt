@@ -1,0 +1,10 @@
+!* Block 1
+This block is collapsible, but open by default
+*!
+!*> Block 2
+This block is collapsible, but hidden by default
+*!
+
+!* More collapsable
+Not very important info
+*!
