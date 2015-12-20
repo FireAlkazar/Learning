@@ -1,7 +1,3 @@
-!define COMMAND_PATTERN {%m -r fitnesse.fitserver.FitServer,fitsharp\fit.dll %p}
-!define TEST_RUNNER {fitsharp\Runner.exe}
-!path ..\AcceptanceTests\bin\Debug\AcceptanceTests.dll
-
 !|import|
 |AcceptanceTests|
 |Tristan|

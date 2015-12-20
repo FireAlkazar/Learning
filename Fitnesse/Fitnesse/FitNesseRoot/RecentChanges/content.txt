@@ -1,3 +1,5 @@
+|||22:04:34 Вс, дек 20, 2015|
+|HelloWorldTest||22:03:23 Вс, дек 20, 2015|
 |PurchaseTicketSuite||23:41:13 Вс, дек 13, 2015|
 |FrontPage||23:40:50 Вс, дек 13, 2015|
 |MarkupVariables||23:38:38 Вс, дек 13, 2015|
@@ -14,4 +16,3 @@
 |PurchaseTicketFirstTry||01:10:14 Чт, дек 10, 2015|
 |PlayerRegistration||24:14:39 Чт, дек 10, 2015|
 |SpecialFixturesForSymbols||20:35:04 Вс, дек 06, 2015|
-|HelloWorldTest||20:21:35 Вс, дек 06, 2015|
