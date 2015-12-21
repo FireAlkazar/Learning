@@ -387,6 +387,29 @@ let getMaxDistanse (paramss:int list) =
     let partialTimeFly = totalTime % (flyTime + restTime)
     let lastFlyTime = min partialTimeFly flyTime
     fullTimeFliesCount*flyTime*speed + lastFlyTime*speed
+
+let getMaxDistanceWithBonus (deers:int list list) =
+    let totalDeers = List.length deers
+    let totalTime = 2503
+    let curDistance = Array.init totalDeers (fun x -> 0)
+    let bonus = Array.init totalDeers (fun x -> 0)
+    for curTime=1 to totalTime do
+        for deerIndex=0 to totalDeers - 1 do
+            let speed = deers.[deerIndex].[0]
+            let flyTime = deers.[deerIndex].[1]
+            let restTime = deers.[deerIndex].[2]
+            let isFlying = 
+                (curTime % (flyTime + restTime)) > 0
+                && (curTime % (flyTime + restTime)) <= flyTime
+            if isFlying then
+                curDistance.[deerIndex] <- curDistance.[deerIndex] + speed
+
+        let curMaxDist = curDistance |> Array.max
+        for i=0 to curDistance.Length - 1 do
+            if curDistance.[i] = curMaxDist then
+                bonus.[i] <- bonus.[i] + 1
+    bonus
+
 let DeerParamsInput = [
     [27;5;132]
     [22;2;41]
@@ -398,5 +421,8 @@ let DeerParamsInput = [
     [18;6;103]
     [18;5;84]
 ]
+
 let deerMaxPath = List.map getMaxDistanse DeerParamsInput |> List.max
+let deerMaxPathWithBonus = getMaxDistanceWithBonus DeerParamsInput |> Array.max
+
 
