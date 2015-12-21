@@ -425,4 +425,36 @@ let DeerParamsInput = [
 let deerMaxPath = List.map getMaxDistanse DeerParamsInput |> List.max
 let deerMaxPathWithBonus = getMaxDistanceWithBonus DeerParamsInput |> Array.max
 
-
+// Day 15
+let getHighScoreCookie (ingredients:int list list) = 
+    let sugar = ingredients.[0]
+    let sprinkles = ingredients.[1]
+    let candy = ingredients.[2]
+    let chocolate = ingredients.[3]
+    let totalSpoonCount = 100;
+    let mutable maxScore = 0;
+    let mutable maxScoreCalories = 0;
+    for e1 in [0..totalSpoonCount] do
+        for e2 in [0..totalSpoonCount] do
+            for e3 in [0..totalSpoonCount] do
+                let e4 = totalSpoonCount - e1 - e2 - e3
+                if e4 < 0 then
+                    ()
+                else
+                    let capacity = max 0 (sugar.[0]*e1 + sprinkles.[0]*e2 + candy.[0]*e3 + chocolate.[0]*e4)
+                    let durability = max 0 (sugar.[1]*e1 + sprinkles.[1]*e2 + candy.[1]*e3 + chocolate.[1]*e4)
+                    let flavor = max 0 (sugar.[2]*e1 + sprinkles.[2]*e2 + candy.[2]*e3 + chocolate.[2]*e4)
+                    let texture = max 0 (sugar.[3]*e1 + sprinkles.[3]*e2 + candy.[3]*e3 + chocolate.[3]*e4)
+                    let calories = max 0 (sugar.[4]*e1 + sprinkles.[4]*e2 + candy.[4]*e3 + chocolate.[4]*e4)
+                    if calories = 500 then
+                        maxScoreCalories <- max maxScoreCalories (capacity*durability*flavor*texture)
+                    maxScore <- max maxScore (capacity*durability*flavor*texture)
+    (maxScore,maxScoreCalories)
+let HighScoreCookieInput = 
+    [
+        [3;0;0;-3;2]
+        [-3;3;0;0;9]
+        [-1;0;4;0;1]
+        [0;0;-2;2;8]
+    ]
+let highScoredCookie = getHighScoreCookie HighScoreCookieInput
