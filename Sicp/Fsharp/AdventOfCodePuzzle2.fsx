@@ -422,8 +422,8 @@ let DeerParamsInput = [
     [18;5;84]
 ]
 
-let deerMaxPath = List.map getMaxDistanse DeerParamsInput |> List.max
-let deerMaxPathWithBonus = getMaxDistanceWithBonus DeerParamsInput |> Array.max
+//let deerMaxPath = List.map getMaxDistanse DeerParamsInput |> List.max
+//let deerMaxPathWithBonus = getMaxDistanceWithBonus DeerParamsInput |> Array.max
 
 // Day 15
 let getHighScoreCookie (ingredients:int list list) = 
@@ -457,4 +457,37 @@ let HighScoreCookieInput =
         [-1;0;4;0;1]
         [0;0;-2;2;8]
     ]
-let highScoredCookie = getHighScoreCookie HighScoreCookieInput
+//let highScoredCookie = getHighScoreCookie HighScoreCookieInput
+
+// Day 16
+let parseAuntsInput (input:string) =
+    let toSeq (str:string[]) =
+        str
+        |> Array.map (fun x -> 
+            let p = x.Split(':')
+            (p.[0].Trim(), p.[1].Trim()))
+    let rows = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
+    rows
+    |> Array.map (fun x -> x.Split(','))
+    |> Array.map (fun x -> toSeq x)
+let auntToGift = 
+    Map.ofList [
+        ("children", "3")
+        ("cats", "7")
+        ("samoyeds", "2")
+        ("pomeranians", "3")
+        ("akitas", "0")
+        ("vizslas", "0")
+        ("goldfish", "5")
+        ("trees", "3")
+        ("cars", "2")
+        ("perfumes", "1")
+    ]
+
+let getAuntsSueNumber () =
+    let satisfies (pair: string*string) =   
+        auntToGift.[(fst pair)] = (snd pair)
+    let parsed = parseAuntsInput AuntsSueInput
+    let index = parsed |> Array.findIndex (fun x -> Array.forall satisfies x)
+    index + 1
+let AuntsSueNumberResult = getAuntsSueNumber()
