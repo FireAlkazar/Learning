@@ -545,3 +545,52 @@ let containersCombinationsResult2 =
         let minCount = List.length (List.minBy (fun y -> List.length y) x)
         let rez = x |> List.filter (fun y -> List.length y = minCount) 
         rez |> List.length)
+
+//Day 18
+let getLightsGifBliking (input:int[,]) =
+    let size = Array2D.length1 input
+    let getCellValue (x:int) (y:int) (lights:int[,]) =
+        if x < 0 || x > (size-1) then
+            0
+        elif y < 0 || y > (size-1) then
+            0
+        else
+            lights.[x,y]
+    let getOnNeighboursCount (x:int) (y:int) (lights:int[,]) =
+        let top = getCellValue x (y-1) lights
+        let bottom = getCellValue x (y+1) lights
+        let left = getCellValue (x-1) (y) lights
+        let right = getCellValue (x+1) (y) lights
+        let topLeft = getCellValue (x-1) (y-1) lights
+        let topRight = getCellValue (x+1) (y-1) lights
+        let bottomLeft = getCellValue (x-1) (y+1) lights
+        let bottomRight = getCellValue (x+1) (y+1) lights
+        top + bottom + left + right + topLeft + topRight + bottomLeft + bottomRight
+        
+    let stepsCount = 100
+    let mutable cur = input
+    let mutable next = Array2D.copy input
+    for i in [1..stepsCount] do
+        for x=0 to size - 1 do
+            for y=0 to size - 1 do
+                if (x=0 && y=0) || (x=0 && y=99) || (x=99 && y=0) || (x=99 && y=99) then
+                    next.[x,y] <- 1
+                else
+                    let curLight = getCellValue x y cur
+                    let onNeighboursCount = getOnNeighboursCount x y cur
+                    if curLight = 1 then
+                        if List.contains onNeighboursCount [2;3] then
+                            next.[x,y] <- 1
+                        else
+                            next.[x,y] <- 0
+                    else
+                        if onNeighboursCount=3 then
+                            next.[x,y] <- 1
+                        else
+                            next.[x,y] <- 0
+        cur <- Array2D.copy next
+    let mutable count = 0
+    Array2D.iter (fun x -> if x =1 then count <- count + 1) cur
+    count
+
+let LightsGifBlikingResult = getLightsGifBliking LightsGifInput
