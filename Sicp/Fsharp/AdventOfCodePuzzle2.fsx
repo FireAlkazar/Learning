@@ -465,29 +465,83 @@ let parseAuntsInput (input:string) =
         str
         |> Array.map (fun x -> 
             let p = x.Split(':')
-            (p.[0].Trim(), p.[1].Trim()))
+            (p.[0].Trim(), int(p.[1].Trim())))
     let rows = input.Split([|Environment.NewLine|], StringSplitOptions.RemoveEmptyEntries)
     rows
     |> Array.map (fun x -> x.Split(','))
     |> Array.map (fun x -> toSeq x)
 let auntToGift = 
     Map.ofList [
-        ("children", "3")
-        ("cats", "7")
-        ("samoyeds", "2")
-        ("pomeranians", "3")
-        ("akitas", "0")
-        ("vizslas", "0")
-        ("goldfish", "5")
-        ("trees", "3")
-        ("cars", "2")
-        ("perfumes", "1")
+        ("children", 3)
+        ("cats", 7)
+        ("samoyeds", 2)
+        ("pomeranians", 3)
+        ("akitas", 0)
+        ("vizslas", 0)
+        ("goldfish", 5)
+        ("trees", 3)
+        ("cars", 2)
+        ("perfumes", 1)
     ]
 
 let getAuntsSueNumber () =
-    let satisfies (pair: string*string) =   
+    let satisfies (pair: string*int) =   
         auntToGift.[(fst pair)] = (snd pair)
+    let satisfiesRange (pair: string*int) =
+        match fst pair with
+        | "cats" -> auntToGift.[(fst pair)] < (snd pair)
+        | "trees" -> auntToGift.[(fst pair)] < (snd pair)
+        | "pomeranians" -> auntToGift.[(fst pair)] > (snd pair)
+        | "goldfish" -> auntToGift.[(fst pair)] > (snd pair)
+        | _ -> auntToGift.[(fst pair)] = (snd pair)
     let parsed = parseAuntsInput AuntsSueInput
-    let index = parsed |> Array.findIndex (fun x -> Array.forall satisfies x)
+    let index = parsed |> Array.findIndex (fun x -> Array.forall satisfiesRange x)
     index + 1
-let AuntsSueNumberResult = getAuntsSueNumber()
+//let AuntsSueNumberResult = getAuntsSueNumber()
+
+// Day 17
+let CointainersInput = 
+    [
+        11
+        30
+        47
+        31
+        32
+        36
+        3
+        1
+        5
+        3
+        32
+        36
+        15
+        11
+        46
+        26
+        28
+        1
+        19
+        3
+    ]
+
+let getContainersCombinations (input:int list) (lambda:List<List<int>> -> int)=
+    let rec getCombs (rest:int list) (curConts:int list) =
+        let curSum = List.sum curConts
+        if curSum = 150 then
+            [curConts]
+        elif curSum > 150 then
+            []
+        else
+            match rest with
+            | [] -> []
+            | h::t ->
+                List.append (getCombs t (h::curConts)) (getCombs t curConts)
+    let combs = getCombs input []
+    lambda combs
+
+let containersCombinationsResult = getContainersCombinations CointainersInput List.length
+let containersCombinationsResult2 = 
+    getContainersCombinations CointainersInput (fun (x:int list list) -> 
+        let minCount = List.length (List.minBy (fun y -> List.length y) x)
+        let rez = x |> List.filter (fun y -> List.length y = minCount) 
+        rez |> List.length)
