@@ -61,6 +61,27 @@ let getMinimumStepsToConstructMolecule (molecule:string) (subs:(string*string) l
         //alreadyDoneMolecules <- List.append alreadyDoneMolecules curMolecules
     counter    
 
-let moleculesCount = List.length (getAllDistinctMolecules medicineMolecule MoleculesSubstitutionInput)
+//let moleculesCount = List.length (getAllDistinctMolecules medicineMolecule MoleculesSubstitutionInput)
 //let minimumStepsToConstructMolecule = getMinimumStepsToConstructMolecule medicineMolecule MoleculesSubstitutionInput
 
+//Day 20
+let elvesPresentsTotal = 29000000
+
+let getAllDivisitors (num:int) =
+    let mutable divs = []
+    for i in 1..num do
+        if num % i = 0 then
+            divs <- i::divs
+    divs
+
+let rec findFewestNumWithSumDivisitorGreaterThan (sum:int) (probe:int) (extraFilter:int -> bool) =
+    let curSum = (getAllDivisitors probe) |> List.filter extraFilter |> List.sum
+    if curSum > sum then
+        probe
+    else
+        if curSum > 2000000 then
+            printfn "probe - %d, sum - %d" probe curSum
+        findFewestNumWithSumDivisitorGreaterThan sum (probe+1) extraFilter
+
+//let houseNumberWithRequiredElvesPresents = findFewestNumWithSumDivisitorGreaterThan (elvesPresentsTotal/10) 665000 (fun x -> true)
+let houseNumberWithRequiredElvesPresents2 = findFewestNumWithSumDivisitorGreaterThan (elvesPresentsTotal/11) 665000 (fun x -> x*50 > elvesPresentsTotal/11 )
