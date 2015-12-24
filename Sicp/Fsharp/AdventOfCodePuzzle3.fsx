@@ -74,8 +74,8 @@ let getAllDivisitors (num:int) =
             divs <- i::divs
     divs
 
-let rec findFewestNumWithSumDivisitorGreaterThan (sum:int) (probe:int) (extraFilter:int -> bool) =
-    let curSum = (getAllDivisitors probe) |> List.filter extraFilter |> List.sum
+let rec findFewestNumWithSumDivisitorGreaterThan (sum:int) (probe:int) (extraFilter:int -> int -> bool) =
+    let curSum = (getAllDivisitors probe) |> List.filter (extraFilter probe) |> List.sum
     if curSum > sum then
         probe
     else
@@ -83,5 +83,73 @@ let rec findFewestNumWithSumDivisitorGreaterThan (sum:int) (probe:int) (extraFil
             printfn "probe - %d, sum - %d" probe curSum
         findFewestNumWithSumDivisitorGreaterThan sum (probe+1) extraFilter
 
-//let houseNumberWithRequiredElvesPresents = findFewestNumWithSumDivisitorGreaterThan (elvesPresentsTotal/10) 665000 (fun x -> true)
-let houseNumberWithRequiredElvesPresents2 = findFewestNumWithSumDivisitorGreaterThan (elvesPresentsTotal/11) 665000 (fun x -> x*50 > elvesPresentsTotal/11 )
+//let houseNumberWithRequiredElvesPresents = findFewestNumWithSumDivisitorGreaterThan (elvesPresentsTotal/10) 665000 (fun x y -> true)
+//let houseNumberWithRequiredElvesPresents2 = findFewestNumWithSumDivisitorGreaterThan (elvesPresentsTotal/11) 665000 (fun x y -> x <= y*50 )
+
+//Day 21
+let TheBoss = [103;9;2]
+let Weapons = [(4,8);(5,10);(6,25);(7,40);(8,74)]
+let Armor = [(0,0);(1,13);(2,31);(3,53);(4,75);(5,102)]
+let Rings = [(1,25);(2,50);(3,100);(-1,20);(-2,40);(-3,80)]
+let TwoRings =
+    seq {
+        for i in 0..Rings.Length - 2 do
+            for j in i+1..Rings.Length - 1 do
+                yield [Rings.[i];Rings.[j]]
+    } |> Seq.toList
+let RingsUnified = List.map (fun x -> [x]) Rings
+let AllPossibleRings = []::(List.append RingsUnified TwoRings)
+
+let rec willPlayerWin (player:int list) (boss:int list) =
+    if boss.[0] <= 0 then 
+        true
+    elif player.[0] <= 0 then
+        false
+    else
+       let playerStrike = max (player.[1] - boss.[2]) 1
+       let bossStrike = max (boss.[1] - player.[2]) 1
+       let newPlayerStats = (player.[0] - bossStrike)::(List.tail player)
+       let newBossStats = (boss.[0] - playerStrike)::(List.tail boss)
+       willPlayerWin newPlayerStats newBossStats
+
+let getStatsAndCost (weapon:int*int) (armor:int*int) (rings:(int*int) list) =
+    let mutable damage = fst weapon
+    let mutable defense = fst armor
+    let mutable cost = (snd weapon) + (snd armor)
+    for ring in rings do
+        cost <- cost + (snd ring)
+        let stat = fst ring
+        if stat >= 0 then
+            damage <- damage + stat
+        else
+            defense <- defense  + (-stat)
+    ((damage,defense), cost)
+
+let getMinCostPlayerWins (boss:int list) =
+    let mutable minCost = 500
+    for weapon in Weapons do
+        for armor in Armor do
+            for rings in AllPossibleRings do
+                let curStatAndCost = getStatsAndCost weapon armor rings
+                let stats = fst curStatAndCost
+                let cost = snd curStatAndCost
+                if willPlayerWin [100;(fst stats);(snd stats)] boss then
+                    minCost <- min minCost cost
+    minCost
+
+let getMaxCostPlayerLose (boss:int list) =
+    let mutable maxCost = 0
+    for weapon in Weapons do
+        for armor in Armor do
+            for rings in AllPossibleRings do
+                let curStatAndCost = getStatsAndCost weapon armor rings
+                let stats = fst curStatAndCost
+                let cost = snd curStatAndCost
+                if willPlayerWin [100;(fst stats);(snd stats)] boss then
+                    ()
+                else
+                    maxCost <- max maxCost cost
+    maxCost 
+            
+let minCostWin = getMinCostPlayerWins TheBoss
+let maxCostLose = getMaxCostPlayerLose TheBoss
