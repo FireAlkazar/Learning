@@ -151,5 +151,158 @@ let getMaxCostPlayerLose (boss:int list) =
                     maxCost <- max maxCost cost
     maxCost 
             
-let minCostWin = getMinCostPlayerWins TheBoss
-let maxCostLose = getMaxCostPlayerLose TheBoss
+//let minCostWin = getMinCostPlayerWins TheBoss
+//let maxCostLose = getMaxCostPlayerLose TheBoss
+
+//Day 22
+type SpellType =
+    | MagicMissile
+    | Drain
+    | Shield
+    | Poison
+    | Recharge
+
+type SpellEffect = {Type:SpellType;TimeToLive:int}
+
+let onlyDifferentTypes (effects:SpellEffect list) =
+    let types = List.map (fun (x:SpellEffect) -> x.Type) effects
+    let distinctTypes = types |> Seq.distinct |> Seq.toList
+    (List.length types) = (List.length distinctTypes)
+
+let willMagicianWin (spells:SpellType[]) (boss:int list) =
+    let mutable bossHitPoints = boss.[0]
+    let bossDamage = boss.[1]
+    let mutable playerMana = 250
+    let mutable playerHitPoints = 50
+    let mutable effects = []
+    let mutable win = false
+    let mutable winMana = 0
+    let mutable totalMana = 0
+    let mutable playerArmor = 0
+    let mutable hasSameEffects = false
+    
+    for spell in spells do
+        if bossHitPoints <= 0 || playerHitPoints <= 0 || playerMana < 53 then
+            ()
+        elif hasSameEffects then
+            ()
+        else
+            //Player turn
+            playerArmor <- 0
+            let mutable updatedEffectsPlayer = []
+            for effect in effects do
+                match effect.Type with
+                | Recharge ->
+                    playerMana <- playerMana + 101
+                | Poison ->
+                    bossHitPoints <- bossHitPoints - 3
+                | Shield ->
+                    playerArmor <- 7
+                | _ -> ()
+                if effect.TimeToLive > 1 then
+                    updatedEffectsPlayer <- {Type=effect.Type;TimeToLive=effect.TimeToLive - 1}::updatedEffectsPlayer
+            effects <- updatedEffectsPlayer
+
+            if bossHitPoints <= 0 && playerHitPoints > 0 && playerMana >= 53 then
+                win <- true
+                winMana <- totalMana
+
+            match spell with
+            | MagicMissile -> 
+                bossHitPoints <- bossHitPoints - 4
+                playerMana <- playerMana - 53
+                totalMana <- totalMana + 53
+            | Drain -> 
+                bossHitPoints <- bossHitPoints - 2
+                playerMana <- playerMana - 73
+                totalMana <- totalMana + 73
+                playerHitPoints <- playerHitPoints + 2
+            | Shield ->
+                playerMana <- playerMana - 113
+                totalMana <- totalMana + 113
+                effects <- { Type=Shield; TimeToLive=6 }::effects
+            | Poison ->
+                playerMana <- playerMana - 173
+                totalMana <- totalMana + 173
+                effects <- { Type=Poison; TimeToLive=6 }::effects
+            | Recharge ->
+                playerMana <- playerMana - 229
+                totalMana <- totalMana + 229
+                effects <- { Type=Recharge; TimeToLive=5 }::effects
+
+            if onlyDifferentTypes effects = false then
+                hasSameEffects <-true
+            else
+                if bossHitPoints <= 0 && playerHitPoints > 0 then
+                    win <- true
+                    winMana <- totalMana
+
+                //BossTurn
+                playerArmor <- 0
+                let mutable updatedEffectsBoss = []
+                for effect in effects do
+                    match effect.Type with
+                    | Recharge ->
+                        playerMana <- playerMana + 101
+                    | Poison ->
+                        bossHitPoints <- bossHitPoints - 3
+                    | Shield ->
+                        playerArmor <- 7
+                    | _ -> ()
+                    if effect.TimeToLive > 1 then
+                        updatedEffectsBoss <- {Type=effect.Type;TimeToLive=effect.TimeToLive - 1}::updatedEffectsBoss
+                effects <- updatedEffectsBoss
+
+                if bossHitPoints <= 0 && playerHitPoints > 0 && playerMana > 0 then
+                    win <- true
+                    winMana <- totalMana
+
+                let bossAttack = 8 - playerArmor
+                playerHitPoints <- playerHitPoints - bossAttack
+    (win,winMana)
+
+let TheBoss2 = [51;9]
+let testG = willMagicianWin [|Recharge;Shield;Drain;Poison;MagicMissile|] [14;8]          
+
+let getMinManaWinGameBySteps (boss:int list) (stepsCount:int) =
+    let mutable minMana = System.Int32.MaxValue
+    let spellTypes = [MagicMissile;Drain;Shield;Poison;Recharge]
+    let maxSpellTypeIndex = List.length spellTypes - 1
+    let maxSpells = stepsCount
+    let mutable indexes = Array.init maxSpells (fun x -> 0)
+    let finalIndexes = Array.init maxSpells (fun x -> maxSpellTypeIndex)
+    let mutable spells = []
+    let mutable minMana = System.Int32.MaxValue
+    let mutable winnigComb = []
+    let getNextSpellCombination (ind:int []) =
+        let mutable done1 = false
+        for i=0 to Array.length ind - 1 do
+            if done1 then
+                ()
+            else
+                if ind.[i] < maxSpellTypeIndex then
+                    done1 <- true
+                    ind.[i] <- ind.[i] + 1
+                    for j=0 to i - 1 do
+                        ind.[j] <- 0
+
+    while indexes <> finalIndexes do
+        let spells = indexes |> Array.map (fun x -> spellTypes.[x])
+        let gameResult = willMagicianWin spells boss
+        if fst gameResult then
+            winnigComb <- spells::winnigComb
+            minMana <- min minMana (snd gameResult)
+        getNextSpellCombination indexes
+    minMana
+
+let getMinManaWinGame (boss:int list) =
+    let mutable res = 100000
+    for i in 11..20 do
+        printfn "spells count - %d" i
+        let mana = getMinManaWinGameBySteps boss i
+        if mana > 0 then
+            res <- min mana res
+            printfn "min Mana - %d" res
+    res
+
+let r = getMinManaWinGame TheBoss2
