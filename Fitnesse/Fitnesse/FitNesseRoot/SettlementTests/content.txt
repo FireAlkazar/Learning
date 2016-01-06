@@ -1,0 +1,26 @@
+!|Tristan.Test.Settlement.SettlementTest|
+
+|Accounts before the draw|
+|player|balance|
+|Arthur|100|
+|Ford|100|
+|Trisha|100|
+|Marvin|100|
+
+|Tickets in the Draw|
+|player|numbers|value|
+|Ford|2,11,22,33,39,18|50|
+|Arthur|1,5,4,7,9,20|50|
+|Trisha|10,21,30,6,16,26|50|
+|Marvin|12,13,14,15,16,17|50|
+
+|Draw results are|1,5,4,20,9,7|
+
+|Accounts after the Draw|
+|Player|Balance?|
+|Arthur|118|
+|Ford|50|
+|Trisha|50|
+|Marvin|50|
+
+

@@ -1,5 +1,6 @@
+|SettlementTests||15:59:14 Ср, янв 06, 2016|
+|FrontPage||15:36:56 Ср, янв 06, 2016|
 |CollapsableBlocks||22:27:31 Вс, дек 20, 2015|
-|FrontPage||22:26:42 Вс, дек 20, 2015|
 |PurchaseTicketSuite.SuiteSetUp||22:17:35 Вс, дек 20, 2015|
 |HelloWorldTest.PageHeader||22:12:09 Вс, дек 20, 2015|
 |HelloWorldTest.PageFooter||22:11:25 Вс, дек 20, 2015|

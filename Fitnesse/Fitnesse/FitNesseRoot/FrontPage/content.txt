@@ -29,6 +29,9 @@ SubWiki
 SomePage
 IncludeAnotherPage
 
+embeddedFixtures
+SettlementTests
+
 misc
 MarkupVariables
 CollapsableBlocks

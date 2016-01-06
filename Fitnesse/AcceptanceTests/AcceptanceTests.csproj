@@ -69,6 +69,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckLogIn.cs" />
+    <Compile Include="GojkoBook\Tristan\test\PayoutTable.cs" />
+    <Compile Include="GojkoBook\Tristan\test\PlayerRegistration.cs" />
+    <Compile Include="GojkoBook\Tristan\test\PurchaseTicket.cs" />
+    <Compile Include="GojkoBook\Tristan\test\ReviewTickets.cs" />
+    <Compile Include="GojkoBook\Tristan\test\Settlement.cs" />
+    <Compile Include="GojkoBook\Tristan\test\SetUpTestEnvironment.cs" />
+    <Compile Include="GojkoBook\Tristan\test\TotalPoolValue.cs" />
     <Compile Include="TestConcatenation.cs" />
     <Compile Include="PurchaseTicket.cs" />
     <Compile Include="PlayerRegisters.cs" />
