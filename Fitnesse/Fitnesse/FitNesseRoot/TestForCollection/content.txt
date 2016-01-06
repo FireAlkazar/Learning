@@ -1,0 +1,18 @@
+!|Tristan.Test.ReviewTickets|
+
+|Draw on |01/01/2008| is open|
+
+|Player | john | opens account with | 100 | dollars|
+
+|Player|john|buys a ticket with numbers|1,3,4,5,8,10|for draw on|01/01/2008|
+|Player|john|buys a ticket with numbers|2,4,5,8,10,12|for draw on|01/01/2008|
+|Player|john|buys|5|tickets with numbers|3,6,9,12,15,18|for draw on|01/01/2008|
+
+|Player|john|lists open tickets|
+|draw|numbers|value|
+|01/01/2008|1,3,4,5,8,10|10|
+|01/01/2008|2,4,5,8,10,12|10|
+|01/01/2008|3,6,9,12,15,18|50|
+
+
+

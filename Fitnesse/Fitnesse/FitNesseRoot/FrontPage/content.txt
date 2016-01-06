@@ -36,3 +36,4 @@ misc
 MarkupVariables
 CollapsableBlocks
 WrappingBusinessObjects
+TestForCollection
