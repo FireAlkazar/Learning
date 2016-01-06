@@ -1,4 +1,4 @@
-|TestForCollection||16:49:05 Ср, янв 06, 2016|
+|TestForCollection||17:02:55 Ср, янв 06, 2016|
 |FrontPage||16:47:19 Ср, янв 06, 2016|
 |WrappingBusinessObjects||16:23:21 Ср, янв 06, 2016|
 |SettlementTests||15:59:14 Ср, янв 06, 2016|
