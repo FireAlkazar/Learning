@@ -1,0 +1,9 @@
+!|import|
+|AcceptanceTests|
+
+!|MessageLog|
+|Enqueue|directly to the queue|
+|check|count|1|
+|Generate|12|Messages|
+|check|count|13|
+|check|dequeue|directly to the queue|
