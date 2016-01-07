@@ -1,0 +1,5 @@
+!|import|
+|AcceptanceTests.SeleniumSmallTest|
+
+!|SearchInGoogleTests|
+|Search And Wait|

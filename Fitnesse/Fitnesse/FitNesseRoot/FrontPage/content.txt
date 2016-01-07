@@ -37,3 +37,6 @@ MarkupVariables
 CollapsableBlocks
 WrappingBusinessObjects
 TestForCollection
+
+selenium
+SearchInGoogleTest
