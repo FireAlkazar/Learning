@@ -23,7 +23,7 @@
 	Ищите пути для автоматизации, даже если первые попытки не увенчались успехом
 	Не стригите яков!(Don't shave yaks!) - если одно изменение приводит к большой цепочки других изменений и проблем, возможно от начального изменения стоит отказаться
 	Machines are compiled output
-	Yesterdays's best practices are tomorrows anti-patterns
+	Yesterdays's best practices become tomorrows anti-patterns
 	Связаннасть очень большая проблема
 	Архитектура всегда становится итеративной, это только вопрос времени
 	Нужно уметь приключаться micro <=> macro
@@ -47,3 +47,26 @@
 		- Слои
 		- Событийно-ориентированная архитектура
 		- SOA
+
+Глава 4(Сравнение и выбор архитектуры)
+	Отслеживать тренды в архитектуре
+	Нормализация матрицы фич(feature matrix)
+	Избегать полярных оценок "супер/отстой"
+		http://nealford.com/memeagora/2009/08/05/suck-rock-dichotomy.html
+	Примеры архитектур:
+		CQRS
+			- almost always requires eventual consistency
+		Eventually Consistent
+			http://www.allthingsdistributed.com/2008/12/eventually_consistent.html
+		Классификация доменной логики
+			http://martinfowler.com/bliki/EagerReadDerivation.html
+		Архитектура LMAX(1 класс, 1 поток, 6КК orders/sec)!!!!
+			http://martinfowler.com/articles/lmax.html
+			
+	
+	
+	
+	
+	
+	
+	
