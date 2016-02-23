@@ -1,0 +1,24 @@
+<html>
+<head>
+<style type="text/css">
+  #container {
+    max-width: 800px;
+    height: 600px;
+    margin: auto;
+  }
+</style>
+</head>
+<body>
+<div id="container"></div>
+<script src="sigma/sigma.min.js"></script>
+<script src="sigma/sigma.parsers.gexf.min.js"></script>
+<script>
+  sigma.parsers.gexf('tech_universe.gexf', {
+    container: 'container',
+    settings: {
+      defaultNodeColor: '#ec5148'
+    }
+  });
+</script>
+</body>
+</html>
