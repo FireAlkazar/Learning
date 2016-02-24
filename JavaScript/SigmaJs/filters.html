@@ -1,0 +1,83 @@
+<html>
+<head>
+<style type="text/css">
+  #container {
+    max-width: 1000px;
+    height: 800px;
+    margin: auto;
+  }
+</style>
+</head>
+<body>
+<div id="container"></div>
+<script src="sigma/sigma.min.js"></script>
+<script src="sigma/sigma.parsers.json.min.js"></script>
+<script src="sigma/sigma.plugins.filter.min.js"></script>
+<script>
+    // these are just some preliminary settings 
+    var g = {
+        nodes: [],
+        edges: []
+    };
+
+   // Create new Sigma instance in graph-container div (use your div name here) 
+   s = new sigma({
+   graph: g,
+   container: 'container',
+   renderer: {
+    container: document.getElementById('container'),
+    type: 'canvas'
+   },
+   settings: {
+    minNodeSize: 8,
+    maxNodeSize: 16
+   }
+   });
+
+   // first you load a json with (important!) s parameter to refer to the sigma instance   
+   var filter;
+   sigma.parsers.json(
+        'data.json',
+        s,
+        function() {
+            // this below adds x, y attributes as well as size = degree of the node 
+            var i,
+                    nodes = s.graph.nodes(),
+                    len = nodes.length;
+
+            for (i = 0; i < len; i++) {
+                nodes[i].x = Math.random();
+                nodes[i].y = Math.random();
+                nodes[i].size = s.graph.degree(nodes[i].id);
+                nodes[i].color = nodes[i].center ? '#333' : '#666';
+            }
+
+            // Refresh the display:
+            s.refresh();
+			
+			filter = new sigma.plugins.filter(s);
+        }
+   ); 
+	var applyFilter = true;
+    setInterval(function()
+    { 
+		if(applyFilter)
+		{
+			filter
+				.nodesBy(function(n){ return n.id != "n1" }, 'non-n1')
+				.apply();
+		}
+		else
+		{
+			filter
+				.undo()
+				.apply();
+		}
+		
+		applyFilter = !applyFilter;
+	}
+   , 3000);
+
+</script>
+</body>
+</html>
