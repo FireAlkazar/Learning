@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{4BAE773D-0D6D-4FBE-A7C9-C7B968F35877}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <OutputPath>bin</OutputPath>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app.css" />
+    <Content Include="index.html" />
+    <Content Include="web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="app.compoonent.ts" />
+    <TypeScriptCompile Include="app.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.26.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.28.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.30.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.31.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.32.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.33.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.34.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.35.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.36.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.37.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.38.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2-2.0.0-alpha.39.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\angular2.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\http-2.0.0-alpha.37.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\http-2.0.0-alpha.38.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\http-2.0.0-alpha.39.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.30.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.31.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.34.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.35.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.36.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.37.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.38.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\router-2.0.0-alpha.39.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\test_lib-2.0.0-alpha.38.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\angular2\test_lib-2.0.0-alpha.39.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\es6-promise\es6-promise.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\es6-shim\es6-shim.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx-lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.aggregates.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.async-lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.async.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.backpressure-lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.backpressure.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.binding-lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.binding.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.coincidence-lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.coincidence.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.experimental.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.joinpatterns.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.testing.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.time-lite.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.time.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\rx\rx.virtualtime.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>TypeScript</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\WebApplications\Microsoft.WebApplication.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>18368</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:18368/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind>None</TypeScriptModuleKind>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+</Project>
