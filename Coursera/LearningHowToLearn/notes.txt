@@ -50,7 +50,22 @@ Week 2
 			Main idea: recall is best technique to keep in touch with new information
 			
 	Part 2
-		Video 1
-			
+		Video 1 (What motivates you)
+			Acetylcholine affects focused learning
+			Dopamine is responsible for pleasure by illusions(what drugs do)
+			Serotonin - social life and risk taking behavior
+		Video 2
+			Chunks can form collections or library of solutions
+			In defuse mode several chunks can compose new chunk to provide solutin
+			2 way of problem solving:
+				- Sequential(Focused)
+				- Holistic(Global)
+					Should be late verified by sequential
+		Video 3
+			Interleaving!
+			Einstuller - installed blocks, preventing new ideas
+			Deliberate practice - focusing on most difficult things
+			Overlearning - repeating same material over and over, reaching automaticy(sometimes good, sometimes not)
+		
 		
 	
