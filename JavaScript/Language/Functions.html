@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			function globalScopeVariableDeclaration_Bad() {
+				message = 'hi';//no var => global scope variable
+			}
+			
+			function argsAreCopyed(num, str, obj) {
+				num = 3;
+				str = 'modified';
+				obj.a = 'mod';//this will be modified
+			}
+			
+			function hasDefaultArg(a1,a2) {
+				a2 = a2 || 'default value';
+				alert(a2);
+			}
+			
+			
+			globalScopeVariableDeclaration_Bad();
+			var testNum = 1;
+			var testStr = 'original';
+			var testObj = {'a':'orig'};
+			argsAreCopyed(testNum,testStr, testObj);
+			
+			
+			//hasDefaultArg('haha');
+			
+			function pow(a, b) {
+				var res = 1;
+				while(b > 1) {
+					if(b % 2 === 0) {
+						a *= a;
+						b = b / 2;
+					}
+					else {
+						b -= 1;
+						res *= a;
+					}
+				}
+				
+				return res*a;
+			}
+			
+			alert(pow(3,2));
+			alert(pow(3,3));
+			alert(pow(1,100));
+		</script>
+	</body>
+</html>
