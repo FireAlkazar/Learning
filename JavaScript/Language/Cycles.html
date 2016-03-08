@@ -1,0 +1,53 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			//var i = 3;
+			//while(i)
+			//{
+			//	alert(i--);
+			//}
+			
+			//var i = 0;
+			//while (i++ < 5) 
+			//{
+			//	alert(i);
+			//}
+			
+			//for(var i = 0; i < 5; ++i)
+			//{
+			//	alert(i);
+			//}
+			
+			//var i = 0;
+			//while(i < 5)
+			//{
+			//	alert(i);
+			//	i++;
+			//}
+			
+			for(var i = 2; i <=10; i++)
+			{
+				var isSimple = true;
+				for(var j = 2; j < i; j++)
+				{
+					if(i % j == 0 )
+					{
+						isSimple = false;
+						break;
+					}
+				}
+				
+				if(isSimple)
+				{
+					alert(i);
+				}
+			}
+
+
+		</script>
+	</body>
+</html>
