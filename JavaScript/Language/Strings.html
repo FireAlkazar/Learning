@@ -1,0 +1,48 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			alert('This is copyright sign - \u00A9');
+
+			alert('Escape symbol does work for common symbols - \a');
+			
+			alert(toUpperCaseFirstLetter('вася'));
+			
+			function toUpperCaseFirstLetter(str) {
+				if ( !str ) {
+					return str;
+				}
+				
+				var result = "";
+				
+				for ( var i = 0; i < str.length; i++ ) {
+					if( i == 0) {
+						result += str.charAt(i).toUpperCase();
+					}
+					else {
+						result += str.charAt(i);
+					}
+				}
+				
+				return result;
+			}
+			
+			function checkSpam(str) {
+				var searchString = str.toUpperCase();
+				if ( ~str.indexOf("XXX") ) {
+					return true;
+				}
+				
+				if ( ~str.indexOf("Viagra".toUpperCase())) {
+					return true;
+				}
+				
+				return false;
+			}
+			
+		</script>
+	</body>
+</html>
