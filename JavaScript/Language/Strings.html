@@ -5,11 +5,30 @@
 	</head>
 	<body>
 		<script>
-			alert('This is copyright sign - \u00A9');
+			//alert('This is copyright sign - \u00A9');
 
-			alert('Escape symbol does work for common symbols - \a');
+			//alert('Escape symbol does work for common symbols - \a');
 			
-			alert(toUpperCaseFirstLetter('вася'));
+			//alert(toUpperCaseFirstLetter('вася'));
+			
+			//alert(checkSpam(''));
+			//alert(checkSpam('this is xxxx'));
+			//alert(checkSpam('hacked'));
+			
+			//alert(truncate('Вот, что мне хотелось бы сказать на эту тему:', 20));
+			
+			alert('"ё" > "я" becase code ' + "ё".charCodeAt(0) + " > " + "я".charCodeAt(0));
+			alert('In html use &#2702 - \u2702');
+			
+			function truncate(str, maxLength) {
+				str = str || '';
+				if (str.length <= maxLength) {
+					return str;
+				}
+				else {
+					return str.substr(str, maxLength - 3) + '...';
+				}
+			}
 			
 			function toUpperCaseFirstLetter(str) {
 				if ( !str ) {
@@ -32,11 +51,11 @@
 			
 			function checkSpam(str) {
 				var searchString = str.toUpperCase();
-				if ( ~str.indexOf("XXX") ) {
+				if ( ~searchString.indexOf("XXX") ) {
 					return true;
 				}
 				
-				if ( ~str.indexOf("Viagra".toUpperCase())) {
+				if ( ~searchString.indexOf("Viagra".toUpperCase())) {
 					return true;
 				}
 				
