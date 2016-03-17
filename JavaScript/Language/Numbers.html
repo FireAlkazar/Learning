@@ -5,10 +5,45 @@
 	</head>
 	<body>
 		<script>
+			alert(fib(77));
+			console.log(fib(77));
+			alert(getDecimal(12.3));
+			alert(getDecimal2(12.3));
+			alert(getDecimal(12.5));
+			alert(getDecimal2(12.5));
+			alert(9999999999999999);//shows 10000000000000000
+			alert(35.0.toString(36));
+			alert(32..toString(16));
 			alert(0.1 + 0.2 == 0.3);
 			alert(12.3 ^ 0);
 			alert("What is the number for 09? " + 09);
 			alert("What is the number for 010? " + 010);
+			
+			alert({toString: function (){return 'this function is called from alert'}});
+			
+			
+			function addMoney(m1, m2) {
+				var result = (m1 * 100 + m2 * 100) / 100;
+				return result;
+			}
+			
+			function getDecimal(num) {
+				return num - (num ^ 0);
+			}
+			
+			function getDecimal2(num) {
+				return num - Math.floor(num);
+			}
+			
+			function getDecimal3(num) {
+				return num - Math.floor(num);
+			}
+			
+			function fib(n) {
+				var fi = (Math.sqrt(5) + 1)/2;
+				return Math.pow(fi, n)/Math.sqrt(5);
+			}
+			
 		</script>
 	</body>
 </html>
