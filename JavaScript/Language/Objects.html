@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			var person = {};
+			person.name = 'Vasya';
+			person.surname = 'Petrov';
+			person.name = 'Sergey';
+			
+			delete person.name;
+			
+			var menu = {
+				width: 300,
+				height: 200,
+				title: 'My menu' 
+			};
+			
+			alert( multiplyNumeric(menu).width );
+			
+			function multiplyNumeric(obj) {
+				for(var key in obj) {
+					if( isNumeric(obj[key]) ) {
+						obj[key] *= 2;
+					}
+				}
+				
+				return obj;
+			}
+			
+			function isNumeric(num) {
+				return !isNaN(parseFloat(num)) && isFinite(num);
+			}
+
+		</script>
+	</body>
+</html>
