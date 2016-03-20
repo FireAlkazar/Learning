@@ -1,0 +1,52 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			var styles = ['Jazz', 'Blues'];
+			styles.push('Rock-n-Roll');
+			styles[styles.length - 2] = 'Classical';
+			styles.unshift('Rap', 'Reggy');
+			
+			var strings = ["кришна", "кришна", "харе", "харе", "харе", "харе", "кришна", "кришна", "8-()"];
+
+			var arr = [ "HTML", "JavaScript", "CSS" ];
+			var arrSorted = arr.slice(0).sort();
+			alert(arrSorted);
+			alert(arr);
+
+			function find(arr, value) {
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i] === value) {
+						return i;
+					}
+				}
+				
+				return -1;
+			}
+			
+			function filterRange(arr, a, b) {
+				var result = [];
+				for (var i=0; i < arr.length; i++) {
+					if( a <= arr[i] && arr[i] <= b) {
+						result.push(arr[i]);
+					}
+				}
+				
+				return result;
+			}
+			
+			function unique(arr) {
+				var obj = {};
+				for (var i=0; i < arr.length; i++) {
+					obj[arr[i]] = 0;
+				}
+				
+				return Object.keys(obj);
+			}
+			
+		</script>
+	</body>
+</html>
