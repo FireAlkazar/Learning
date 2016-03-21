@@ -1,0 +1,41 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			var testDate = new Date(2012, 1, 20, 3, 12);
+			
+			alert(getLastDayInMonth(2016, 1));
+			
+			function getLastDayInMonth(year, month) {
+				var date = new Date(year, month + 1);
+				date.setDate(0);
+				
+				return date.getDate();
+			}
+			
+			function getWeekDay(date) {
+				switch(date.getDay()) {
+					case 0: 
+						return 'вс';
+					case 1:
+						return 'пн';
+					case 2:
+						return 'вт';
+					case 3:
+						return 'ср';
+					case 4:
+						return 'чт';
+					case 5: 
+						return 'пт';
+					case 6:
+						return 'сб';
+				}
+			}
+			
+
+		</script>
+	</body>
+</html>
