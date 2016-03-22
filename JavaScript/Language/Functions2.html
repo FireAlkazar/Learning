@@ -1,0 +1,33 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			function myFunc() {
+				alert('Function Declaration');
+			}
+			
+			myFunc = function() { alert('Function Expression'); };
+			//myFunc();
+			var f1 = function f2(){ alert('Named Function Expression'); };
+			
+			var f3 = function sayHi(n) {
+				alert(n);
+				sayHi = 0;
+			}
+			
+			//f3(1);
+			//f4(1);
+			
+			if ("a" in window) {
+				a = 1;
+			}
+			var a;
+ 
+			alert(a);
+
+		</script>
+	</body>
+</html>
