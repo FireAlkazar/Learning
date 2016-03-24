@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			//alert(sum2(1)(2)(3));
+			
+			var buffer = makeBuffer();
+			buffer(0);
+			buffer(1);
+			buffer(0);
+			
+			
+			alert(buffer());
+			buffer.clear();
+			alert(buffer());
+			
+			function makeBuffer() {
+				var result = '';
+				
+				function innerBuffer(str) {
+					if (str === undefined) {
+						return result;
+					}
+					
+					result += str;
+				}
+				
+				innerBuffer.clear = function() {
+					result = '';
+				}
+				
+				return innerBuffer;
+			}
+			
+			function sum(a) {
+				return function(b) {
+					return a + b;
+				}
+			}
+			
+			function sum2(a) {
+				var result = a;
+			
+				function innerSum(b) {
+					result += b;
+					return innerSum;
+				}
+				
+				innerSum.toString = function() { 
+					return result; 
+				}
+				
+				return innerSum;
+			}
+			
+			
+		</script>
+	</body>
+</html>
