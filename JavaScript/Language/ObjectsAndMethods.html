@@ -1,0 +1,37 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			var a = new A;
+			var b = new B;
+			//alert(a == b);//returns false
+			
+			//var user = new User('Vasya');
+			//user.sayHi('OOP');
+			
+			var arr = ["a", "b"];
+ 
+			arr.push( function() { alert(this); } )
+ 
+			arr[2]();
+
+			function User(name) {
+				
+				this.sayHi = function(name) {
+					alert(name + ' says hi to ' + name);
+				}
+			}
+			
+			var obj = {name: "Test"};
+			function A() {
+				return obj;
+			}
+			function B() {
+				return obj;
+			}
+		</script>
+	</body>
+</html>

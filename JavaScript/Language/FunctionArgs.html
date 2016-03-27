@@ -1,0 +1,21 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+			f(undefined);
+			f();
+			
+			function f(x) {
+				if (arguments.length === 0) {
+					alert(0);
+				}
+				else {
+					alert(1);
+				}
+			}
+		</script>
+	</body>
+</html>
