@@ -1,0 +1,57 @@
+﻿<!DOCTYPE HTML/>
+<html>
+	<head>
+	  <meta http-equiv="X-UA-Compatible" content="IE=8"/>
+	</head>
+	<body>
+		<script>
+		
+			var foo = {
+				toString: function () {
+					return 'foo';
+				},
+				valueOf: function () {
+					return 2;
+				}
+			};
+			 
+			//alert(foo);//"foo"
+			//alert(foo + 1);//"3"
+			//alert(foo + "3");//"23"  !!!
+
+			var obj1 = {
+				toString: function () {
+					return 'a';
+				},
+				valueOf: function () {
+					return 1;
+				}
+			};
+			
+			var obj2 = {
+				toString: function () {
+					return 'a';
+				},
+				valueOf: function () {
+					return 1;
+				}
+			};
+			
+			if (obj1 == obj2) {
+				alert('obj1 equals obj2');//not shown
+			}
+			
+			//[] == ![] is true because {toString: function () { return ''; }} == false
+			
+			//alert(new Date(0) - 0);//NaN - 0
+			//alert(new Array(1)[0] + "");//"undefined" +
+			//alert(({})[0]);//"undefined" +
+			//alert([1] + 1);//"11" +
+			//alert([1,2] + [3,4]);//1,23,4 +
+			//alert([] + null + 1);//"null1" +
+			//alert([[0]][0][0]);//"0" +
+			//alert(({} + {}));//"[object Object][object Object]" 
+
+		</script>
+	</body>
+</html>
