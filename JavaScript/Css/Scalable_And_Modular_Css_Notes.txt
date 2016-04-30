@@ -1,0 +1,37 @@
+Layout
+	+ Use id's for layout core elements(header, footer, nav, main)
+	+ For layout transform apply a class on higher level element
+		.l-collapsed #header {
+			display: none;
+		}
+		
+Modules
+	+ Avoid using element selectors
+		Avoid:
+			.img-gallery > img {
+				width: 100px;
+			}
+		Use:
+			.img-gallery-item {
+				width: 100px;
+			}
+	+ Subclass modules. Base module and the sub-module class get applied to the Html element
+		Avoid:
+			.pod {
+				width: 50%;
+			}
+			
+			#sidebar .pod {
+				width: 100%;
+			}
+		Use: 
+			.pod {
+				width: 50%;
+			}
+			
+			.pod-constrained {
+				width: 100%;
+			}
+			
+			
+		
