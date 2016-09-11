@@ -5,9 +5,26 @@ class TreeNode<T> {
 }
 
 class BinaryTree {
-	build(numbers: number[]) : TreeNode<number> {
+	arrayToTree(numbers: number[]) : TreeNode<number> {
 		numbers.sort();
 		return this.buildCore(numbers);
+	}
+	
+	treeToArray(node: TreeNode<number>) : number[] {
+		if(node == null) {
+			return [];
+		}
+		
+		let left = this.treeToArray(node.left);
+		let value = node.value;
+		let right = this.treeToArray(node.right);
+		
+		left.push(value);
+		for(let i=0; i<right.length;i++) {
+			left.push(right[i]);
+		}
+		
+		return left; 
 	}
 	
 	exists(node: TreeNode<number>, value: number) : boolean {
@@ -51,12 +68,10 @@ class BinaryTree {
 }
 
 
-let builder = new BinaryTree();
-let node = builder.build([1,2,4,5,6,7,9]);
-console.log(`1 - ${builder.exists(node,1)}`);
-console.log(`3 - ${builder.exists(node,3)}`);
-console.log(`5 - ${builder.exists(node,5)}`);
-console.log(`6 - ${builder.exists(node,6)}`);
-console.log(`10 - ${builder.exists(node,10)}`);
+let binaryTree = new BinaryTree();
+let originalArray = [1,2,4,5,6,7,9];
+console.log(`original array - ${originalArray}`);
+let tree = binaryTree.arrayToTree(originalArray);
+console.log(`array from tree - ${binaryTree.treeToArray(tree)}`);
 
 
