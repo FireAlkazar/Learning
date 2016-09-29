@@ -1,25 +1,6 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'my-app',
-  template: `
-    <h1>{{title}}</h1>
-    <ul>
-        <li *ngFor="let message of messages">
-            {{message}}
-        </li>
-    </ul>
-  `
+  template: '<h1>My First Angular App</h1>'
 })
-export class AppComponent { 
-    title = "Angular2 example";
-    messages = [
-        "Hello World!",
-        "Another string",
-        "Another one",
-        "Another one",
-        "Another one",
-        "...",
-        "Another one"
-    ];
-}
+export class AppComponent { }
