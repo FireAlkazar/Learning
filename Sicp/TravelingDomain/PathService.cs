@@ -13,8 +13,8 @@ namespace TravelingDomain
                 throw new ArgumentException(nameof(cards));
             }
 
-            var firstCard = GetFirstCard(cards);
-            var orderedCards = GetOrderedCardsByMovingFromFirstToLast(firstCard, cards);
+            TravelCard firstCard = GetFirstCard(cards);
+            List<TravelCard> orderedCards = GetOrderedCardsByMovingFromFirstToLast(firstCard, cards);
             return orderedCards;
         }
 
@@ -39,7 +39,7 @@ namespace TravelingDomain
         private List<TravelCard> GetOrderedCardsByMovingFromFirstToLast(TravelCard firstCard, List<TravelCard> cards)
         {
             var result = new List<TravelCard> {firstCard};
-            var dictionary = cards.ToDictionary(x => x.DeparturePoint, x => x);
+            Dictionary<string, TravelCard> dictionary = cards.ToDictionary(x => x.DeparturePoint, x => x);
             var currentCard = firstCard;
 
             while (dictionary.ContainsKey(currentCard.DestinationPoint))
