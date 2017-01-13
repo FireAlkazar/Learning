@@ -3,7 +3,7 @@ using Xunit;
 
 namespace TravelingDomain.UnitTests
 {
-    public class PathServiceTests
+    public sealed class PathServiceTests
     {
         private readonly PathService _pathService = new PathService();
 

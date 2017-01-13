@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TravelingDomain
 {
-    public class TravelCard
+    public sealed class TravelCard
     {
         public TravelCard(string departurePoint, string destinationPoint)
         {

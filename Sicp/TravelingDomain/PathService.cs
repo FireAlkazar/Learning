@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace TravelingDomain
 {
-    public class PathService
+    public sealed class PathService
     {
         public List<TravelCard> GetOrderedCards(List<TravelCard> cards)
         {
@@ -38,9 +38,9 @@ namespace TravelingDomain
 
         private List<TravelCard> GetOrderedCardsByMovingFromFirstToLast(TravelCard firstCard, List<TravelCard> cards)
         {
-            var result = new List<TravelCard> {firstCard};
+            var result = new List<TravelCard> { firstCard };
             Dictionary<string, TravelCard> dictionary = cards.ToDictionary(x => x.DeparturePoint, x => x);
-            var currentCard = firstCard;
+            TravelCard currentCard = firstCard;
 
             while (dictionary.ContainsKey(currentCard.DestinationPoint))
             {
