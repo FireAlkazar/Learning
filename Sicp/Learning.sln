@@ -9,6 +9,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fsharp", "Fsharp\Fsharp.fsp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelingDomain", "TravelingDomain\TravelingDomain.csproj", "{DE036B5E-83E8-46DF-B569-BF0041522583}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompilerTestApp", "CompilerTestApp\CompilerTestApp.csproj", "{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DE036B5E-83E8-46DF-B569-BF0041522583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE036B5E-83E8-46DF-B569-BF0041522583}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE036B5E-83E8-46DF-B569-BF0041522583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
