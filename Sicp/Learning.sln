@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TravelingDomain", "Travelin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompilerTestApp", "CompilerTestApp\CompilerTestApp.csproj", "{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Algorithms", "Algorithms\Algorithms.csproj", "{9C102C89-00AE-458E-994C-984DA889F374}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F319B8C0-D2F9-421E-B1FB-8A55E45D8DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C102C89-00AE-458E-994C-984DA889F374}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C102C89-00AE-458E-994C-984DA889F374}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C102C89-00AE-458E-994C-984DA889F374}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C102C89-00AE-458E-994C-984DA889F374}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
