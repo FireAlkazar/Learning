@@ -82,11 +82,6 @@ namespace ThreadsTestApp.Threads
         {
             _stopped = true;
             _idleThreads.ToList().ForEach(x => x.Stop());//???
-            Wait();
-        }
-
-        private void Wait()
-        {
             _threads.ForEach(x => x.Join());
         }
 
