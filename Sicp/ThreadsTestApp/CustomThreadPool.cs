@@ -1,187 +1,135 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace ThreadsTestApp.Threads
 {
     public class CustomThreadPool
     {
-        private readonly TaskDispatcher _dispatcher;
-        private readonly object _lockObject = new object();
-        private volatile bool _isStopped;
+        private readonly List<ThreadPoolItem> _threadPoolItems = new List<ThreadPoolItem>();
+        private readonly QueueDispatcher _queueDispatcher = new QueueDispatcher();
 
         public CustomThreadPool(int numberOfThreads)
         {
-            _dispatcher = new TaskDispatcher(numberOfThreads);
-        }
-
-        public bool Execute(ITask task)
-        {
-            lock (_lockObject)
+            if(numberOfThreads <= 0)
             {
-                if (_isStopped)
-                {
-                    return false;
-                }
+                throw new ArgumentException(nameof(numberOfThreads));
             }
 
-            _dispatcher.Enqueue(task, TaskPriority.Normal);
-            return true;
+            for (var i = 0; i < numberOfThreads; i++)
+            {
+                var threadPoolItem = new ThreadPoolItem(_queueDispatcher);
+                threadPoolItem.Start();
+                _threadPoolItems.Add(threadPoolItem);
+            }
+        }
+
+        public bool Execute(ITask task, TaskPriority taskPriority)
+        {
+            return _queueDispatcher.Enqueue(task, taskPriority);
         }
 
         public void Stop()
         {
-            lock (_lockObject)
-            {
-                _isStopped = true;
-            }
-            _dispatcher.ExecuteAllCurrentTasksAndWait();
+            _queueDispatcher.Stop();
+            _threadPoolItems.ForEach(x => x.WaitForStop());
         }
     }
 
-    internal class PriorityQueue
+    internal class QueueDispatcher
     {
-        private readonly ConcurrentQueue<ITask> _queue = new ConcurrentQueue<ITask>();
+        private object _dispatcherLock = new object();
+        private readonly IPriorityQueue _queue = new PriorityQueue();
+        private volatile bool _stopped;
 
-        public void Enqueue(ITask task, TaskPriority priority)
+        public bool Enqueue(ITask task, TaskPriority priority)
         {
-            _queue.Enqueue(task);
+            lock (_dispatcherLock)
+            {
+                if(_stopped)
+                {
+                    return false;
+                }
+
+                _queue.Enqueue(task, priority);
+                Monitor.PulseAll(_dispatcherLock);
+                return true;
+            }
         }
 
         public bool TryDequeue(out ITask task)
         {
-            return _queue.TryDequeue(out task);
-        }
-    }
-
-    internal class TaskDispatcher
-    {
-        private readonly ConcurrentStack<ThreadPoolItem> _idleThreads = new ConcurrentStack<ThreadPoolItem>();
-        private readonly List<ThreadPoolItem> _threads = new List<ThreadPoolItem>();
-        private readonly PriorityQueue _taskQueue = new PriorityQueue();
-        private bool _stopped;
-
-        public TaskDispatcher(int numberOfThreads)
-        {
-            for (var i = 0; i < numberOfThreads; i++)
+            lock (_dispatcherLock)
             {
-                var thread = new ThreadPoolItem();
-                thread.TaskFinished += x =>
+                while (true)
                 {
-                    _idleThreads.Push(x);
-                    TryDispatchTaskToThread();
-                };
-                _threads.Add(thread);
-                _idleThreads.Push(thread);
+                    if (_queue.Count > 0)
+                    {
+                        task = _queue.Dequeue();
+                        return true;
+                    }
+
+                    if (_stopped)
+                    {
+                        task = null;
+                        return false;
+                    }
+
+                    Monitor.Wait(_dispatcherLock);
+                }
             }
         }
 
-        public void ExecuteAllCurrentTasksAndWait()
+        public void Stop()
         {
-            _stopped = true;
-            _idleThreads.ToList().ForEach(x => x.Stop());//???
-            _threads.ForEach(x => x.Join());
-        }
-
-        public void Enqueue(ITask task, TaskPriority taskPriority)
-        {
-            _taskQueue.Enqueue(task, taskPriority);
-            TryDispatchTaskToThread();
-        }
-
-        private void TryDispatchTaskToThread()
-        {
-            ThreadPoolItem thread = GetThread();
-
-            if (thread == null)
+            lock (_dispatcherLock)
             {
-                return;
+                _stopped = true;
             }
-
-            ITask task;
-            if (_taskQueue.TryDequeue(out task))
-            {
-                thread.ExecuteAsync(task);
-                return;
-            }
-
-            if (_stopped)
-            {
-                thread.Stop();
-            }
-            else
-            {
-                _idleThreads.Push(thread);
-            }
-        }
-
-        private ThreadPoolItem GetThread()
-        {
-            ThreadPoolItem thread;
-            _idleThreads.TryPop(out thread);
-            return thread;
         }
     }
 
     internal class ThreadPoolItem
     {
-        private readonly AutoResetEvent _autoResetEvent = new AutoResetEvent(false);
         private readonly Thread _thread;
-        private volatile bool _isStopped;
-        private volatile ITask _task;
+        private QueueDispatcher _taskQueueDispatcher;
 
-        public ThreadPoolItem()
+        public ThreadPoolItem(QueueDispatcher taskQueueDispatcher)
         {
+            _taskQueueDispatcher = taskQueueDispatcher;
             _thread = new Thread(MainLoop);
-            _thread.Start();
         }
 
         private void MainLoop()
         {
             while (true)
             {
-                _autoResetEvent.WaitOne();
-
-                if (_isStopped)
-                {
-                    return;
-                }
-
                 try
                 {
-                    _task.Execute();
+                    ITask task;
+                    if (_taskQueueDispatcher.TryDequeue(out task))
+                    {
+                        task.Execute();
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                finally
+                catch (Exception)
                 {
-                    RaiseTaskFinishedEvent();
                 }
             }
         }
 
-        public void ExecuteAsync(ITask task)
+        public void Start()
         {
-            _task = task;
-            _autoResetEvent.Set();
+            _thread.Start();
         }
 
-        public void Stop()
-        {
-            _isStopped = true;
-            _autoResetEvent.Set();
-        }
-
-        public void Join()
+        public void WaitForStop()
         {
             _thread.Join();
-        }
-
-        public event Action<ThreadPoolItem> TaskFinished;
-
-        private void RaiseTaskFinishedEvent()
-        {
-            TaskFinished?.Invoke(this);
         }
     }
 }
