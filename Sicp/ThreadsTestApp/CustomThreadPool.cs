@@ -85,6 +85,7 @@ namespace ThreadsTestApp.Threads
             lock (_dispatcherLock)
             {
                 _stopped = true;
+                //Monitor.PulseAll(_dispatcherLock);
             }
         }
     }
