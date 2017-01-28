@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace ThreadsTestApp.Threads
+namespace ThreadsTestApp
 {
     public class CustomThreadPool
     {
+        private readonly QueueDispatcher _queueDispatcher = new QueueDispatcher(new PriorityQueue());
         private readonly List<ThreadPoolItem> _threadPoolItems = new List<ThreadPoolItem>();
-        private readonly QueueDispatcher _queueDispatcher = new QueueDispatcher();
 
         public CustomThreadPool(int numberOfThreads)
         {
@@ -38,9 +38,14 @@ namespace ThreadsTestApp.Threads
 
     internal class QueueDispatcher
     {
-        private object _dispatcherLock = new object();
-        private readonly IPriorityQueue _queue = new PriorityQueue();
+        private readonly object _dispatcherLock = new object();
+        private readonly PriorityQueue _queue;
         private volatile bool _stopped;
+
+        public QueueDispatcher(PriorityQueue queue)
+        {
+            _queue = queue;
+        }
 
         public bool Enqueue(ITask task, TaskPriority priority)
         {
@@ -57,7 +62,7 @@ namespace ThreadsTestApp.Threads
             }
         }
 
-        public bool TryDequeue(out ITask task)
+        public bool WaitForDequeueOrStop(out ITask task)
         {
             lock (_dispatcherLock)
             {
@@ -92,8 +97,8 @@ namespace ThreadsTestApp.Threads
 
     internal class ThreadPoolItem
     {
+        private readonly QueueDispatcher _taskQueueDispatcher;
         private readonly Thread _thread;
-        private QueueDispatcher _taskQueueDispatcher;
 
         public ThreadPoolItem(QueueDispatcher taskQueueDispatcher)
         {
@@ -108,7 +113,8 @@ namespace ThreadsTestApp.Threads
                 try
                 {
                     ITask task;
-                    if (_taskQueueDispatcher.TryDequeue(out task))
+                    bool taskTaken = _taskQueueDispatcher.WaitForDequeueOrStop(out task);
+                    if (taskTaken)
                     {
                         task.Execute();
                     }
@@ -131,6 +137,72 @@ namespace ThreadsTestApp.Threads
         public void WaitForStop()
         {
             _thread.Join();
+        }
+    }
+
+    internal class PriorityQueue
+    {
+        private const int HighVersusNormalPriorityCoefficient = 3;
+        private readonly Dictionary<TaskPriority, Queue<ITask>> _queues = new Dictionary<TaskPriority, Queue<ITask>>();
+        private long _highPriorityTaskTakenCount;
+        private long _normalPriorityTaskTakenCount;
+
+        public PriorityQueue()
+        {
+            _queues[TaskPriority.High] = new Queue<ITask>();
+            _queues[TaskPriority.Normal] = new Queue<ITask>();
+            _queues[TaskPriority.Low] = new Queue<ITask>();
+        }
+
+        public int Count => _queues[TaskPriority.High].Count
+            + _queues[TaskPriority.Normal].Count
+            + _queues[TaskPriority.Low].Count;
+
+        public ITask Dequeue()
+        {
+            Queue<ITask> queue;
+            if (ShouldTakeHighPriority())
+            {
+                _highPriorityTaskTakenCount++;
+                queue = _queues[TaskPriority.High];
+            }
+            else if (ShouldTakeNormalPriority())
+            {
+                _normalPriorityTaskTakenCount++;
+                queue = _queues[TaskPriority.Normal];
+            }
+            else
+            {
+                queue = _queues[TaskPriority.Low];
+            }
+
+            return queue.Dequeue();
+        }
+
+        public void Enqueue(ITask task, TaskPriority taskPriority)
+        {
+            _queues[taskPriority].Enqueue(task);
+        }
+
+        private bool IsLessThanThreeHighOnOneNormaPrioritylWasTaken()
+        {
+            if (_normalPriorityTaskTakenCount == 0)
+            {
+                return _highPriorityTaskTakenCount < HighVersusNormalPriorityCoefficient;
+            }
+
+            return ((double)_highPriorityTaskTakenCount) / _normalPriorityTaskTakenCount < HighVersusNormalPriorityCoefficient;
+        }
+
+        private bool ShouldTakeHighPriority()
+        {
+            return _queues[TaskPriority.High].Count > 0
+                   && IsLessThanThreeHighOnOneNormaPrioritylWasTaken();
+        }
+
+        private bool ShouldTakeNormalPriority()
+        {
+            return _queues[TaskPriority.Normal].Count > 0;
         }
     }
 }

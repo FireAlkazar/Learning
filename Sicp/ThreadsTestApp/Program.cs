@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using ThreadsTestApp.Threads;
 
 namespace ThreadsTestApp
 {
@@ -8,15 +7,19 @@ namespace ThreadsTestApp
     {
         static void Main(string[] args)
         {
-            var threadPool = new CustomThreadPool(2);
+            var threadPool = new CustomThreadPool(1);
 
-            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "slept 1500")), TaskPriority.Normal);
-            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "slept 1500")), TaskPriority.Normal);
-            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "slept 1500")), TaskPriority.Normal);
-            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "slept 1500")), TaskPriority.Normal);
+            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "task 1")), TaskPriority.Normal);
+            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "task 2")), TaskPriority.Low);
+            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "task 3")), TaskPriority.Normal);
+            threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "task 4")), TaskPriority.High);
             
             threadPool.Stop();
             Console.WriteLine("Stopped");
+
+            bool isAdded = threadPool.Execute(new ActionTask(() => SleepAndPrint(1500, "task 4")), TaskPriority.High);
+            Console.WriteLine($"Is task added after stop - {isAdded}");
+
             Console.ReadLine();
         }
 
