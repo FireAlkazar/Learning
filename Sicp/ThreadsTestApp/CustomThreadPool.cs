@@ -26,6 +26,11 @@ namespace ThreadsTestApp
 
         public bool Execute(ITask task, TaskPriority taskPriority)
         {
+            if (task == null)
+            {
+                throw new ArgumentNullException(nameof(task));
+            }
+
             return _queueDispatcher.Enqueue(task, taskPriority);
         }
 
