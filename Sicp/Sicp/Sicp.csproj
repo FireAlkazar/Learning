@@ -74,7 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />
     <Compile Include="Tests\LispExpressionParser.cs" />
-    <Compile Include="Tests\TokenizerTests.cs" />
+    <Compile Include="Lisp\Parser.cs" />
+    <Compile Include="Tests\Lisp\ParserTests.cs" />
+    <Compile Include="Tests\Lisp\TokenizerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

@@ -6,6 +6,7 @@ namespace Sicp.Lisp
 {
     public enum TokenType
     {
+        NewStatement,
         Define,
         Plus,
         Int,
@@ -14,6 +15,22 @@ namespace Sicp.Lisp
 
     public class Token
     {
+        public static readonly Token NewStatement = new Token
+        {
+            Type = TokenType.NewStatement,
+            Value = string.Empty
+        };
+
+        public Token()
+        {
+        }
+
+        public Token(TokenType type, string value)
+        {
+            Type = type;
+            Value = value;
+        }
+
         public TokenType Type { get; set; }
 
         public string Value { get; set; }
@@ -38,6 +55,10 @@ namespace Sicp.Lisp
              foreach (var line in lines)
              {
                 List<Token> lineTokens = ParseLine(line);
+                if (lineTokens.Count > 0)
+                {
+                    result.Add(Token.NewStatement);
+                }
                 result.AddRange(lineTokens);
              }
 
