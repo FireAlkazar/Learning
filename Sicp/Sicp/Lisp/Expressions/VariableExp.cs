@@ -1,4 +1,4 @@
-namespace Sicp.LispWithoutBrackets.Expressions
+namespace Sicp.Lisp.Expressions
 {
     public class VariableExp : Exp
     {
@@ -7,8 +7,9 @@ namespace Sicp.LispWithoutBrackets.Expressions
             VariableName = variableName;
         }
 
-        public string VariableName { get; set; }
+        public string VariableName { get; private set; }
 
         public override ExpressionType Type => ExpressionType.Variable;
+        public override bool IsLeaf => true;
     }
 }

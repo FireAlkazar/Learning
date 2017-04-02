@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Sicp.LispWithoutBrackets.Expressions;
-using Sicp.LispWithoutBrackets.Tokens;
+using Sicp.Lisp.Expressions;
+using Sicp.Lisp.Tokens;
 
-namespace Sicp.LispWithoutBrackets
+namespace Sicp.Lisp
 {
     public class ListWbExecutor
     {

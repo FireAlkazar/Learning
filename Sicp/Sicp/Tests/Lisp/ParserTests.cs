@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Sicp.LispWithoutBrackets;
-using Sicp.LispWithoutBrackets.Expressions;
-using Sicp.LispWithoutBrackets.Tokens;
+using Sicp.Lisp;
+using Sicp.Lisp.Expressions;
+using Sicp.Lisp.Tokens;
 using Xunit;
 
-namespace Sicp.Tests.LispWithoutBrackets
+namespace Sicp.Tests.Lisp
 {
     public class ParserTests
     {
@@ -13,10 +13,11 @@ namespace Sicp.Tests.LispWithoutBrackets
         {
             var tokens = new List<Token>
             {
-                Token.NewStatement,
-                new Token(TokenType.Define, string.Empty),
+                new Token(TokenType.LeftBracket, "("),
+                new Token(TokenType.Define, "define"),
                 new Token(TokenType.Identifier, "x"),
                 new Token(TokenType.Int, "5"),
+                new Token(TokenType.RightBracket, ")"),
             };
 
             List<Exp> exps = new Parser().Parse(tokens);

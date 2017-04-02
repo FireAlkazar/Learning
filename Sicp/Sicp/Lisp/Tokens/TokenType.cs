@@ -1,8 +1,9 @@
-namespace Sicp.LispWithoutBrackets.Tokens
+namespace Sicp.Lisp.Tokens
 {
     public enum TokenType
     {
-        NewStatement,
+        LeftBracket,
+        RightBracket,
         Define,
         Plus,
         Int,

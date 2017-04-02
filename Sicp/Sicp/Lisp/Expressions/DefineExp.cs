@@ -1,4 +1,4 @@
-namespace Sicp.LispWithoutBrackets.Expressions
+namespace Sicp.Lisp.Expressions
 {
     public class DefineExp : Exp
     {

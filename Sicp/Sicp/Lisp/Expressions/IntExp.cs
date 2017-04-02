@@ -1,4 +1,4 @@
-namespace Sicp.LispWithoutBrackets.Expressions
+namespace Sicp.Lisp.Expressions
 {
     public class IntExp : Exp
     {
@@ -10,5 +10,6 @@ namespace Sicp.LispWithoutBrackets.Expressions
         public int Value { get; set; }
 
         public override ExpressionType Type => ExpressionType.Int;
+        public override bool IsLeaf => true;
     }
 }

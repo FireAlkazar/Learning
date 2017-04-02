@@ -1,7 +1,7 @@
-﻿using Sicp.LispWithoutBrackets;
+﻿using Sicp.Lisp;
 using Xunit;
 
-namespace Sicp.Tests.LispWithoutBrackets
+namespace Sicp.Tests.Lisp
 {
     public class ListWbExecutorTests
     {
@@ -10,7 +10,7 @@ namespace Sicp.Tests.LispWithoutBrackets
         {
             var listWbExecutor = new ListWbExecutor();
 
-            int result = listWbExecutor.Execute("+ 3 7");
+            int result = listWbExecutor.Execute("(+ 3 7)");
 
             Assert.Equal(10, result);
         }
@@ -21,8 +21,8 @@ namespace Sicp.Tests.LispWithoutBrackets
         {
             var listWbExecutor = new ListWbExecutor();
 
-            const string program = @"define y 5
-+ 3 y";
+            const string program = @"(define y 5)
+(+ 3 y)";
 
             int result = listWbExecutor.Execute(program);
 
@@ -34,9 +34,9 @@ namespace Sicp.Tests.LispWithoutBrackets
         {
             var listWbExecutor = new ListWbExecutor();
 
-            const string program = @"define y 5
-define x y
-+ x y";
+            const string program = @"(define y 5)
+(define x y)
+(+ x y)";
 
             int result = listWbExecutor.Execute(program);
 

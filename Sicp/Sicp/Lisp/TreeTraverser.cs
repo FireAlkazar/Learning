@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sicp.LispWithoutBrackets.Expressions;
+using Sicp.Lisp.Expressions;
 
-namespace Sicp.LispWithoutBrackets
+namespace Sicp.Lisp
 {
     public class TreeTraverser
     {

@@ -1,13 +1,7 @@
-namespace Sicp.LispWithoutBrackets.Tokens
+namespace Sicp.Lisp.Tokens
 {
     public class Token
     {
-        public static readonly Token NewStatement = new Token
-        {
-            Type = TokenType.NewStatement,
-            Value = string.Empty
-        };
-
         public Token()
         {
         }
