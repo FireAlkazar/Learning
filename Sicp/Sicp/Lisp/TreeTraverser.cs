@@ -46,6 +46,11 @@ namespace Sicp.Lisp
 
         private int TraverseArithmetic(ArithmeticExp exp, Dictionary<string, DefineExp> context)
         {
+            if (exp.IsUnaryMinus())
+            {
+                return -(CalculateExp(exp.Children[0], context));
+            }
+
             Func<int, int, int> arithmeticFunction = exp.GetFunction();
             return exp
                 .Children

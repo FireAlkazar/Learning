@@ -32,6 +32,8 @@ namespace Sicp.Lisp.Expressions
 
         public ArithmeticType ArithmeticType { get; set; }
 
+        public override ExpressionType Type => ExpressionType.Arithmetic;
+
         public Func<int,int,int> GetFunction()
         {
             switch (ArithmeticType)
@@ -49,6 +51,9 @@ namespace Sicp.Lisp.Expressions
             }
         }
 
-        public override ExpressionType Type => ExpressionType.Arithmetic;
+        public bool IsUnaryMinus()
+        {
+            return ArithmeticType == ArithmeticType.Minus && Children.Count == 1;
+        }
     }
 }

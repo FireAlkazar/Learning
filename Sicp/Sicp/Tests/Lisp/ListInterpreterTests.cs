@@ -1,4 +1,5 @@
-﻿using Sicp.Lisp;
+﻿using System.Linq;
+using Sicp.Lisp;
 using Xunit;
 
 namespace Sicp.Tests.Lisp
@@ -61,6 +62,26 @@ size";
             int result = listInterpreter.Interprete("(define y (* 3 5))");
 
             Assert.Equal(3 * 5, result);
+        }
+
+        [Fact]
+        public void UnaryMinus()
+        {
+            var listInterpreter = new ListInterpreter();
+
+            int result = listInterpreter.Interprete("(- 5)");
+
+            Assert.Equal(-5, result);
+        }
+
+        [Fact]
+        public void Minus()
+        {
+            var listInterpreter = new ListInterpreter();
+
+            int result = listInterpreter.Interprete("(- 8 5)");
+
+            Assert.Equal(3, result);
         }
 
         [Fact]
