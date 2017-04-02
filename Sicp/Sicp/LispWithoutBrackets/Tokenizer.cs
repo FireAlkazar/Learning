@@ -1,41 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Sicp.LispWithoutBrackets.Tokens;
 
-namespace Sicp.Lisp
+namespace Sicp.LispWithoutBrackets
 {
-    public enum TokenType
-    {
-        NewStatement,
-        Define,
-        Plus,
-        Int,
-        Identifier
-    }
-
-    public class Token
-    {
-        public static readonly Token NewStatement = new Token
-        {
-            Type = TokenType.NewStatement,
-            Value = string.Empty
-        };
-
-        public Token()
-        {
-        }
-
-        public Token(TokenType type, string value)
-        {
-            Type = type;
-            Value = value;
-        }
-
-        public TokenType Type { get; set; }
-
-        public string Value { get; set; }
-    }
-
     public class Tokenizer
     {
         private static readonly List<KeyValuePair<string,TokenType>> regexTable = new List<KeyValuePair<string, TokenType>>
@@ -46,7 +15,7 @@ namespace Sicp.Lisp
             new KeyValuePair<string, TokenType>(@"^[a-zA-Z0-9]", TokenType.Identifier),
         }; 
 
-         public List<Token> Parse(string program)
+         public List<Token> Tokenize(string program)
          {
             var result = new List<Token>();
 

@@ -69,14 +69,25 @@
     <Compile Include="BookExercises\Chapter2\ReverseList_2_18.cs" />
     <Compile Include="LispSimpleCompiler.cs" />
     <Compile Include="BookExercises\Chapter1\CountChangeProblem_1_14.cs" />
-    <Compile Include="Lisp\Tokenizer.cs" />
+    <Compile Include="LispWithoutBrackets\Expressions\DefineExp.cs" />
+    <Compile Include="LispWithoutBrackets\TreeTraverser.cs" />
+    <Compile Include="LispWithoutBrackets\Expressions\Exp.cs" />
+    <Compile Include="LispWithoutBrackets\Expressions\ExpressionType.cs" />
+    <Compile Include="LispWithoutBrackets\Expressions\IntExp.cs" />
+    <Compile Include="LispWithoutBrackets\Expressions\PlusExp.cs" />
+    <Compile Include="LispWithoutBrackets\ListWBExecutor.cs" />
+    <Compile Include="LispWithoutBrackets\Tokens\Token.cs" />
+    <Compile Include="LispWithoutBrackets\Tokenizer.cs" />
+    <Compile Include="LispWithoutBrackets\Tokens\TokenType.cs" />
+    <Compile Include="LispWithoutBrackets\Expressions\VariableExp.cs" />
     <Compile Include="OtherExercises\ComposeNumberBySummingOtherNumbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />
     <Compile Include="Tests\LispExpressionParser.cs" />
-    <Compile Include="Lisp\Parser.cs" />
-    <Compile Include="Tests\Lisp\ParserTests.cs" />
-    <Compile Include="Tests\Lisp\TokenizerTests.cs" />
+    <Compile Include="LispWithoutBrackets\Parser.cs" />
+    <Compile Include="Tests\LispWithoutBrackets\ListWbExecutorTests.cs" />
+    <Compile Include="Tests\LispWithoutBrackets\ParserTests.cs" />
+    <Compile Include="Tests\LispWithoutBrackets\TokenizerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

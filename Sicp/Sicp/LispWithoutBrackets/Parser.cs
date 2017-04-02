@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sicp.LispWithoutBrackets.Expressions;
+using Sicp.LispWithoutBrackets.Tokens;
 
-namespace Sicp.Lisp
+namespace Sicp.LispWithoutBrackets
 {
     public class Parser
     {
@@ -72,38 +74,5 @@ namespace Sicp.Lisp
                 _newStatementTokens.Add(_remainedTokens.Pop());
             }
         }
-    }
-
-    public class VariableExp : Exp
-    {
-        public VariableExp(string variableName)
-        {
-            VariableName = variableName;
-        }
-
-        public string VariableName { get; set; }
-    }
-
-    public class IntExp : Exp
-    {
-        public IntExp(int value)
-        {
-            Value = value;
-        }
-
-        public int Value { get; set; }
-    }
-
-    public class PlusExp : Exp
-    {
-    }
-
-    public class DefineExp : Exp
-    {
-    }
-
-    public class Exp
-    {
-        public List<Exp> Children { get; } = new List<Exp>();
     }
 }

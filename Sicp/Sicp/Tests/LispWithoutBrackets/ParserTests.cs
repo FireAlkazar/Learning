@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using Sicp.Lisp;
+using Sicp.LispWithoutBrackets;
+using Sicp.LispWithoutBrackets.Expressions;
+using Sicp.LispWithoutBrackets.Tokens;
 using Xunit;
 
-namespace Sicp.Tests.Lisp
+namespace Sicp.Tests.LispWithoutBrackets
 {
     public class ParserTests
     {

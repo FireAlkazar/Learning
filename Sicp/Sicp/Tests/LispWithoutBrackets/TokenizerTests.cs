@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
-using Sicp.Lisp;
+using Sicp.LispWithoutBrackets;
+using Sicp.LispWithoutBrackets.Tokens;
 using Xunit;
 
-namespace Sicp.Tests.Lisp
+namespace Sicp.Tests.LispWithoutBrackets
 {
     public class TokenizerTests
     {
         [Fact]
-        public void Parse_Define()
+        public void Tokenize_Define()
         {
             var tokenizer = new Tokenizer();
 
-            List<Token> tokens = tokenizer.Parse("define y 5");
+            List<Token> tokens = tokenizer.Tokenize("define y 5");
 
             Assert.Equal(TokenType.NewStatement, tokens[0].Type);
             Assert.Equal(TokenType.Define, tokens[1].Type);
@@ -22,11 +23,11 @@ namespace Sicp.Tests.Lisp
         }
 
         [Fact]
-        public void Parse_Plus()
+        public void Tokenize_Plus()
         {
             var tokenizer = new Tokenizer();
 
-            List<Token> tokens = tokenizer.Parse("+ 3 5 8");
+            List<Token> tokens = tokenizer.Tokenize("+ 3 5 8");
 
             Assert.Equal(TokenType.NewStatement, tokens[0].Type);
             Assert.Equal(TokenType.Plus, tokens[1].Type);
