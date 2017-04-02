@@ -4,7 +4,7 @@
     {
         Define,
         Int,
-        Plus,
+        Arithmetic,
         Variable 
     }
 }

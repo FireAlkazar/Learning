@@ -31,7 +31,7 @@ namespace Sicp.Tests.Lisp
             List<Token> tokens = tokenizer.Tokenize("(+ 3 5 8)");
 
             Assert.Equal(TokenType.LeftBracket, tokens[0].Type);
-            Assert.Equal(TokenType.Plus, tokens[1].Type);
+            Assert.Equal(TokenType.ArithmeticSign, tokens[1].Type);
             Assert.Equal(TokenType.Int, tokens[2].Type);
             Assert.Equal("3", tokens[2].Value);
             Assert.Equal(TokenType.Int, tokens[3].Type);

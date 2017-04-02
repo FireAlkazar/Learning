@@ -10,7 +10,6 @@ namespace Sicp.Lisp
     {
         private readonly List<Exp> _result = new List<Exp>();
         private Stack<Token> _remainedTokens;
-        private List<Token> _newStatementTokens; 
 
         public List<Exp> Parse(List<Token> tokens)
         {
@@ -20,23 +19,25 @@ namespace Sicp.Lisp
 
             while (_remainedTokens.Count > 0)
             {
-                ExtractNewStatementTokens();
-                var copy1 = _newStatementTokens.ToList();
-                copy1.Reverse();
-                var expressionTokens = new Stack<Token>(copy1);
-                Exp exp = GetExp(expressionTokens);
+                Exp exp = GetExp();
                 _result.Add(exp);
             }
 
             return _result;
         }
 
-        private Exp GetExp(Stack<Token> expressionTokens)
+        private Exp GetExp()
         {
-            Exp exp = GetExpInstance(expressionTokens);
-            if (exp.IsLeaf == false)
+            Token operatorToken = _remainedTokens.Pop();
+            var isComposite = operatorToken.Type == TokenType.LeftBracket;
+            if (isComposite)
             {
-                List<Exp> children = GetChildren(expressionTokens);
+                operatorToken = _remainedTokens.Pop();
+            }
+            Exp exp = GetExpInstance(operatorToken);
+            if (isComposite)
+            {
+                List<Exp> children = GetChildren(_remainedTokens);
                 exp.Children.AddRange(children);
             }
 
@@ -48,59 +49,30 @@ namespace Sicp.Lisp
             var result = new List<Exp>();
             while (expressionTokens.Peek().Type != TokenType.RightBracket)
             {
-                Exp exp = GetExp(expressionTokens);
+                Exp exp = GetExp();
                 result.Add(exp);
             }
+
+            expressionTokens.Pop();
 
             return result;
         }
 
-        private Exp GetExpInstance(Stack<Token> tokens)
+        private Exp GetExpInstance(Token token)
         {
-            Token token = tokens.Pop();
             switch (token.Type)
             {
                 case TokenType.Define:
                     return new DefineExp();
-                case TokenType.Plus:
-                    return new PlusExp();
+                case TokenType.ArithmeticSign:
+                    return new ArithmeticExp(token.Value);
                 case TokenType.Int:
                     int expValue = int.Parse(token.Value);
                     return new IntExp(expValue);
                 case TokenType.Identifier:
                     return new VariableExp(token.Value);
-                case TokenType.LeftBracket:
-                    return GetExp(tokens);
                 default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private void ExtractNewStatementTokens()
-        {
-            var nestedExpressionCount = 0;
-            Token firstToken = _remainedTokens.Pop();
-            if (firstToken.Type != TokenType.LeftBracket)
-            {
-                throw new InvalidOperationException("New statement expected with starting with left bracket");
-            }
-            nestedExpressionCount++;
-
-            _newStatementTokens = new List<Token>();
-
-            while (_remainedTokens.Count > 0 && nestedExpressionCount > 0) //WIP
-            {
-                Token token = _remainedTokens.Pop();
-                _newStatementTokens.Add(token);
-
-                if (token.Type == TokenType.LeftBracket)
-                {
-                    nestedExpressionCount++;
-                }
-                if (token.Type == TokenType.RightBracket)
-                {
-                    nestedExpressionCount--;
-                }
+                    throw new InvalidOperationException($"Токен с типом {token.Type} не должен использоваться для создания экземпляра.");
             }
         }
     }

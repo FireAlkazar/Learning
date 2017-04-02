@@ -10,6 +10,5 @@ namespace Sicp.Lisp.Expressions
         public int Value { get; set; }
 
         public override ExpressionType Type => ExpressionType.Int;
-        public override bool IsLeaf => true;
     }
 }

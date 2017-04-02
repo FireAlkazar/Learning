@@ -31,20 +31,26 @@ namespace Sicp.Lisp
                     TraverseDefine((DefineExp)exp);
                     break;
                 case ExpressionType.Int:
+                    _lastResult = ((IntExp) exp).Value;
                     break;
-                case ExpressionType.Plus:
-                    TraversePlus((PlusExp)exp);
+                case ExpressionType.Arithmetic:
+                    _lastResult = TraverseArithmetic((ArithmeticExp)exp);
                     break;
                 case ExpressionType.Variable:
+                    _lastResult = GetVariableValue(((VariableExp) exp).VariableName);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void TraversePlus(PlusExp exp)
+        private int TraverseArithmetic(ArithmeticExp exp)
         {
-            _lastResult = exp.Children.Sum(childExp => CalculateExp(childExp));
+            Func<int, int, int> arithmeticFunction = exp.GetFunction();
+            return exp
+                .Children
+                .Select(CalculateExp)
+                .Aggregate((x,y) => arithmeticFunction(x,y));
         }
 
         private int CalculateExp(Exp exp)
@@ -57,6 +63,10 @@ namespace Sicp.Lisp
             {
                 string variableName = ((VariableExp)exp).VariableName;
                 return GetVariableValue(variableName);
+            }
+            else if (exp.Type == ExpressionType.Arithmetic)
+            {
+                return TraverseArithmetic((ArithmeticExp)exp);
             }
             else
             {

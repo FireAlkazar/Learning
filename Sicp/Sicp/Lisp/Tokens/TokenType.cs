@@ -5,7 +5,7 @@ namespace Sicp.Lisp.Tokens
         LeftBracket,
         RightBracket,
         Define,
-        Plus,
+        ArithmeticSign,
         Int,
         Identifier
     }

@@ -74,8 +74,8 @@
     <Compile Include="Lisp\Expressions\Exp.cs" />
     <Compile Include="Lisp\Expressions\ExpressionType.cs" />
     <Compile Include="Lisp\Expressions\IntExp.cs" />
-    <Compile Include="Lisp\Expressions\PlusExp.cs" />
-    <Compile Include="Lisp\ListWBExecutor.cs" />
+    <Compile Include="Lisp\Expressions\ArithmeticExp.cs" />
+    <Compile Include="Lisp\ListInterpreter.cs" />
     <Compile Include="Lisp\Tokens\Token.cs" />
     <Compile Include="Lisp\Tokenizer.cs" />
     <Compile Include="Lisp\Tokens\TokenType.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />
     <Compile Include="Tests\LispExpressionParser.cs" />
     <Compile Include="Lisp\Parser.cs" />
-    <Compile Include="Tests\Lisp\ListWbExecutorTests.cs" />
+    <Compile Include="Tests\Lisp\ListInterpreterTests.cs" />
     <Compile Include="Tests\Lisp\ParserTests.cs" />
     <Compile Include="Tests\Lisp\TokenizerTests.cs" />
   </ItemGroup>

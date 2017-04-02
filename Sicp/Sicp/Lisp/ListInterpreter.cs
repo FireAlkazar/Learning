@@ -4,9 +4,9 @@ using Sicp.Lisp.Tokens;
 
 namespace Sicp.Lisp
 {
-    public class ListWbExecutor
+    public class ListInterpreter
     {
-         public int Execute(string program)
+         public int Interprete(string program)
          {
              List<Token> tokens = new Tokenizer().Tokenize(program);
              List<Exp> exps = new Parser().Parse(tokens);
