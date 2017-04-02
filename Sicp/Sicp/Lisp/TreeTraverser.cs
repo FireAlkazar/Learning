@@ -79,19 +79,8 @@ namespace Sicp.Lisp
             var variable = (VariableExp)exp.Children[0];
             var valueExp = exp.Children[1];
 
-            if (valueExp.Type == ExpressionType.Int)
-            {
-                SetVariable(variable.VariableName, ((IntExp)valueExp).Value);
-            }
-            else if (valueExp.Type == ExpressionType.Variable)
-            {
-                string variableName = ((VariableExp)valueExp).VariableName;
-                SetVariable(variable.VariableName, GetVariableValue(variableName));
-            }
-            else
-            {
-                throw new InvalidOperationException($"Incorrect define statement");
-            }
+            int variableValue = CalculateExp(valueExp);
+            SetVariable(variable.VariableName, variableValue);
         }
 
         private void SetVariable(string name, int value)

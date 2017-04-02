@@ -57,6 +57,16 @@ size";
         }
 
         [Fact]
+        public void DefineByExpression()
+        {
+            var listWbExecutor = new ListInterpreter();
+
+            int result = listWbExecutor.Interprete("(define y (* 3 5)) y");
+
+            Assert.Equal(3 * 5, result);
+        }
+
+        [Fact]
         public void LongExpression()
         {
             var listWbExecutor = new ListInterpreter();
