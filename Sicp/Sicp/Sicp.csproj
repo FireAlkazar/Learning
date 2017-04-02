@@ -79,7 +79,7 @@
     <Compile Include="Lisp\Tokens\Token.cs" />
     <Compile Include="Lisp\Tokenizer.cs" />
     <Compile Include="Lisp\Tokens\TokenType.cs" />
-    <Compile Include="Lisp\Expressions\VariableExp.cs" />
+    <Compile Include="Lisp\Expressions\IdentifierExp.cs" />
     <Compile Include="OtherExercises\ComposeNumberBySummingOtherNumbers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />

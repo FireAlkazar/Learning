@@ -5,6 +5,6 @@
         Define,
         Int,
         Arithmetic,
-        Variable 
+        Identifier 
     }
 }

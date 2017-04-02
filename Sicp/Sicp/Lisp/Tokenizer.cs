@@ -14,7 +14,7 @@ namespace Sicp.Lisp
             new KeyValuePair<string, TokenType>(@"^\)", TokenType.RightBracket),
             new KeyValuePair<string, TokenType>(@"^[\+\-\*/]", TokenType.ArithmeticSign),
             new KeyValuePair<string, TokenType>(@"^\d+", TokenType.Int),
-            new KeyValuePair<string, TokenType>(@"^[a-zA-Z0-9]+", TokenType.Identifier),
+            new KeyValuePair<string, TokenType>(@"^[a-zA-Z0-9-]+", TokenType.Identifier),
         }; 
 
         public List<Token> Tokenize(string program)

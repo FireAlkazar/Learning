@@ -8,9 +8,9 @@ namespace Sicp.Tests.Lisp
         [Fact]
         public void SingelPlusStatement()
         {
-            var listWbExecutor = new ListInterpreter();
+            var listInterpreter = new ListInterpreter();
 
-            int result = listWbExecutor.Interprete("(+ 3 7)");
+            int result = listInterpreter.Interprete("(+ 3 7)");
 
             Assert.Equal(10, result);
         }
@@ -19,12 +19,11 @@ namespace Sicp.Tests.Lisp
         [Fact]
         public void PlusStatementWithVariable()
         {
-            var listWbExecutor = new ListInterpreter();
-
+            var listInterpreter = new ListInterpreter();
             const string program = @"(define y 5)
 (+ 3 y)";
 
-            int result = listWbExecutor.Interprete(program);
+            int result = listInterpreter.Interprete(program);
 
             Assert.Equal(8, result);
         }
@@ -32,12 +31,11 @@ namespace Sicp.Tests.Lisp
         [Fact]
         public void VariableValue()
         {
-            var listWbExecutor = new ListInterpreter();
-
+            var listInterpreter = new ListInterpreter();
             const string program = @"(define size 5)
 size";
 
-            int result = listWbExecutor.Interprete(program);
+            int result = listInterpreter.Interprete(program);
 
             Assert.Equal(5, result);
         }
@@ -45,23 +43,22 @@ size";
         [Fact]
         public void PlusStatementWithTwoVariable()
         {
-            var listWbExecutor = new ListInterpreter();
-
+            var listInterpreter = new ListInterpreter();
             const string program = @"(define y 5)
 (define x y)
 (+ x y)";
 
-            int result = listWbExecutor.Interprete(program);
+            int result = listInterpreter.Interprete(program);
 
             Assert.Equal(10, result);
         }
 
         [Fact]
-        public void DefineByExpression()
+        public void DefineVariableByExpression()
         {
-            var listWbExecutor = new ListInterpreter();
+            var listInterpreter = new ListInterpreter();
 
-            int result = listWbExecutor.Interprete("(define y (* 3 5)) y");
+            int result = listInterpreter.Interprete("(define y (* 3 5))");
 
             Assert.Equal(3 * 5, result);
         }
@@ -69,11 +66,36 @@ size";
         [Fact]
         public void LongExpression()
         {
-            var listWbExecutor = new ListInterpreter();
+            var listInterpreter = new ListInterpreter();
 
-            int result = listWbExecutor.Interprete("(+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))");
+            int result = listInterpreter.Interprete("(+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))");
 
             Assert.Equal(3*16+9, result);
+        }
+
+        [Fact]
+        public void DefineSquareFunction()
+        {
+            var listInterpreter = new ListInterpreter();
+            const string program = @"(define (square x) (* x x))
+(square 21)";
+
+            int result = listInterpreter.Interprete(program);
+
+            Assert.Equal(21 * 21, result);
+        }
+
+        [Fact]
+        public void DefineSumOfSquaresFunction()
+        {
+            var listInterpreter = new ListInterpreter();
+            const string program = @"(define (square x) (* x x))
+(define (sum-of-squares z y) (+ (square z) (square y)))
+(sum-of-squares 3 4)";
+
+            int result = listInterpreter.Interprete(program);
+
+            Assert.Equal(25, result);
         }
     }
 }

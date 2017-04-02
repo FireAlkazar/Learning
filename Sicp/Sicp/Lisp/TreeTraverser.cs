@@ -7,7 +7,7 @@ namespace Sicp.Lisp
 {
     public class TreeTraverser
     {
-        private readonly Dictionary<string, int> _variables = new Dictionary<string, int>();
+        private readonly Dictionary<string, DefineExp> _globalContext = new Dictionary<string, DefineExp>();
         private int _lastResult;
 
         public void TraverseTree(List<Exp> tree)
@@ -28,45 +28,44 @@ namespace Sicp.Lisp
             switch (exp.Type)
             {
                 case ExpressionType.Define:
-                    TraverseDefine((DefineExp)exp);
+                    _lastResult = TraverseDefine((DefineExp)exp);
                     break;
                 case ExpressionType.Int:
                     _lastResult = ((IntExp) exp).Value;
                     break;
                 case ExpressionType.Arithmetic:
-                    _lastResult = TraverseArithmetic((ArithmeticExp)exp);
+                    _lastResult = TraverseArithmetic((ArithmeticExp)exp, _globalContext);
                     break;
-                case ExpressionType.Variable:
-                    _lastResult = GetVariableValue(((VariableExp) exp).VariableName);
+                case ExpressionType.Identifier:
+                    _lastResult = CalculateIdentifierValue(((IdentifierExp) exp), _globalContext);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private int TraverseArithmetic(ArithmeticExp exp)
+        private int TraverseArithmetic(ArithmeticExp exp, Dictionary<string, DefineExp> context)
         {
             Func<int, int, int> arithmeticFunction = exp.GetFunction();
             return exp
                 .Children
-                .Select(CalculateExp)
+                .Select(x => CalculateExp(x, context))
                 .Aggregate((x,y) => arithmeticFunction(x,y));
         }
 
-        private int CalculateExp(Exp exp)
+        private int CalculateExp(Exp exp, Dictionary<string, DefineExp> context)
         {
             if (exp.Type == ExpressionType.Int)
             {
                 return ((IntExp)exp).Value;
             }
-            else if (exp.Type == ExpressionType.Variable)
+            else if (exp.Type == ExpressionType.Identifier)
             {
-                string variableName = ((VariableExp)exp).VariableName;
-                return GetVariableValue(variableName);
+                return CalculateIdentifierValue((IdentifierExp)exp, context);
             }
             else if (exp.Type == ExpressionType.Arithmetic)
             {
-                return TraverseArithmetic((ArithmeticExp)exp);
+                return TraverseArithmetic((ArithmeticExp)exp, context);
             }
             else
             {
@@ -74,28 +73,45 @@ namespace Sicp.Lisp
             }
         }
 
-        private void TraverseDefine(DefineExp exp)
+        private int TraverseDefine(DefineExp exp)
         {
-            var variable = (VariableExp)exp.Children[0];
-            var valueExp = exp.Children[1];
+            _globalContext[exp.IdentifierName] = exp;
 
-            int variableValue = CalculateExp(valueExp);
-            SetVariable(variable.VariableName, variableValue);
+            return exp.IsVariable 
+                ? CalculateExp(exp.Children[1], _globalContext)
+                : 0;
         }
 
-        private void SetVariable(string name, int value)
+        private int CalculateIdentifierValue(IdentifierExp exp, Dictionary<string, DefineExp> context)
         {
-            _variables[name] = value;
-        }
+            Dictionary<string, DefineExp> localContext = context
+                .ToDictionary(x => x.Key, x => x.Value);
 
-        private int GetVariableValue(string name)
-        {
-            if (_variables.ContainsKey(name) == false)
+            if (localContext.ContainsKey(exp.Name) == false)
             {
-                throw new InvalidOperationException($"В списке переменных не найдена переменная с именем {name}.");
+                throw new InvalidOperationException($"В списке переменных не найдена переменная с именем {exp.Name}.");
             }
 
-            return _variables[name];
+            if (exp.Children.Count == 0)
+            {
+                return CalculateExp(localContext[exp.Name].Children[1], context);
+            }
+
+            var defineExp = localContext[exp.Name];
+            var functionSignature = (IdentifierExp)defineExp.Children[0];
+
+            for (int argumentPosition = 0; argumentPosition < functionSignature.Children.Count; argumentPosition++)
+            {
+                var functionArgument = (IdentifierExp)functionSignature.Children[argumentPosition];
+                var argumentSubstitution = new DefineExp();
+                argumentSubstitution.Children.Add(functionArgument);
+                argumentSubstitution.Children.Add(exp.Children[argumentPosition]);
+                localContext[functionArgument.Name] = argumentSubstitution;
+            }
+
+            var functionBody = defineExp.Children[1];
+
+            return CalculateExp(functionBody, localContext);
         }
     }
 }

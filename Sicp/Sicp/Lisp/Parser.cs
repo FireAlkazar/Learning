@@ -70,7 +70,7 @@ namespace Sicp.Lisp
                     int expValue = int.Parse(token.Value);
                     return new IntExp(expValue);
                 case TokenType.Identifier:
-                    return new VariableExp(token.Value);
+                    return new IdentifierExp(token.Value);
                 default:
                     throw new InvalidOperationException($"Токен с типом {token.Type} не должен использоваться для создания экземпляра.");
             }
