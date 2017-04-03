@@ -71,6 +71,10 @@ namespace Sicp.Lisp
                     return new IntExp(expValue);
                 case TokenType.Identifier:
                     return new IdentifierExp(token.Value);
+                case TokenType.CompareSign:
+                    return new BooleanExp(token.Value);
+                case TokenType.If:
+                    return new IfExp();
                 default:
                     throw new InvalidOperationException($"Токен с типом {token.Type} не должен использоваться для создания экземпляра.");
             }

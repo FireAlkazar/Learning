@@ -28,23 +28,30 @@ namespace Sicp.Lisp
             switch (exp.Type)
             {
                 case ExpressionType.Define:
-                    _lastResult = TraverseDefine((DefineExp)exp);
+                    _lastResult = ExecuteDefine((DefineExp)exp);
                     break;
                 case ExpressionType.Int:
-                    _lastResult = ((IntExp) exp).Value;
-                    break;
                 case ExpressionType.Arithmetic:
-                    _lastResult = TraverseArithmetic((ArithmeticExp)exp, _globalContext);
-                    break;
+                case ExpressionType.Boolean:
                 case ExpressionType.Identifier:
-                    _lastResult = CalculateIdentifierValue(((IdentifierExp) exp), _globalContext);
+                case ExpressionType.If:
+                    _lastResult = CalculateExp(exp, _globalContext);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private int TraverseArithmetic(ArithmeticExp exp, Dictionary<string, DefineExp> context)
+        private int CalculateBoolean(BooleanExp exp, Dictionary<string, DefineExp> context)
+        {
+            Func<int, int, bool> compareFunction = exp.GetFunction();
+            var left = CalculateExp(exp.Children[0], context);
+            var right = CalculateExp(exp.Children[1], context);
+
+            return compareFunction(left, right) ? 1 : 0;
+        }
+
+        private int CalculateArithmetic(ArithmeticExp exp, Dictionary<string, DefineExp> context)
         {
             if (exp.IsUnaryMinus())
             {
@@ -70,7 +77,15 @@ namespace Sicp.Lisp
             }
             else if (exp.Type == ExpressionType.Arithmetic)
             {
-                return TraverseArithmetic((ArithmeticExp)exp, context);
+                return CalculateArithmetic((ArithmeticExp)exp, context);
+            }
+            else if (exp.Type == ExpressionType.Boolean)
+            {
+                return CalculateBoolean((BooleanExp)exp, context);
+            }
+            else if (exp.Type == ExpressionType.If)
+            {
+                return CalculateIf((IfExp)exp, context);
             }
             else
             {
@@ -78,7 +93,18 @@ namespace Sicp.Lisp
             }
         }
 
-        private int TraverseDefine(DefineExp exp)
+        private int CalculateIf(IfExp exp, Dictionary<string, DefineExp> context)
+        {
+            Exp predicate = exp.Children[0];
+            Exp then = exp.Children[1];
+            Exp @else = exp.Children[2];
+
+            return CalculateExp(predicate, context) > 0
+                ? CalculateExp(then, context)
+                : CalculateExp(@else, context);
+        }
+
+        private int ExecuteDefine(DefineExp exp)
         {
             _globalContext[exp.IdentifierName] = exp;
 

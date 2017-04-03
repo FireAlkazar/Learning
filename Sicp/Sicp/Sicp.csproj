@@ -69,7 +69,9 @@
     <Compile Include="BookExercises\Chapter2\ReverseList_2_18.cs" />
     <Compile Include="LispSimpleCompiler.cs" />
     <Compile Include="BookExercises\Chapter1\CountChangeProblem_1_14.cs" />
+    <Compile Include="Lisp\Expressions\BooleanExp.cs" />
     <Compile Include="Lisp\Expressions\DefineExp.cs" />
+    <Compile Include="Lisp\Expressions\IfExp.cs" />
     <Compile Include="Lisp\TreeTraverser.cs" />
     <Compile Include="Lisp\Expressions\Exp.cs" />
     <Compile Include="Lisp\Expressions\ExpressionType.cs" />

@@ -9,11 +9,13 @@ namespace Sicp.Lisp
         private static readonly List<KeyValuePair<string, TokenType>> _regexTable = 
             new List<KeyValuePair<string, TokenType>>
         {
-            new KeyValuePair<string, TokenType>(@"^define", TokenType.Define),
             new KeyValuePair<string, TokenType>(@"^\(", TokenType.LeftBracket),
             new KeyValuePair<string, TokenType>(@"^\)", TokenType.RightBracket),
+            new KeyValuePair<string, TokenType>(@"^define", TokenType.Define),
+            new KeyValuePair<string, TokenType>(@"^if", TokenType.If),
+            new KeyValuePair<string, TokenType>(@"^[<>=]", TokenType.CompareSign),
+            new KeyValuePair<string, TokenType>(@"^-?\d+", TokenType.Int),
             new KeyValuePair<string, TokenType>(@"^[\+\-\*/]", TokenType.ArithmeticSign),
-            new KeyValuePair<string, TokenType>(@"^\d+", TokenType.Int),
             new KeyValuePair<string, TokenType>(@"^[a-zA-Z0-9-]+", TokenType.Identifier),
         }; 
 

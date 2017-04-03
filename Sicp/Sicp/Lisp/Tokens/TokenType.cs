@@ -7,6 +7,8 @@ namespace Sicp.Lisp.Tokens
         Define,
         ArithmeticSign,
         Int,
-        Identifier
+        Identifier,
+        If,
+        CompareSign
     }
 }

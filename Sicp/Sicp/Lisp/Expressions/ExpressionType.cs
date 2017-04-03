@@ -5,6 +5,8 @@
         Define,
         Int,
         Arithmetic,
-        Identifier 
+        Identifier,
+        Boolean,
+        If
     }
 }
