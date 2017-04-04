@@ -14,9 +14,9 @@ namespace Sicp.Lisp
             new KeyValuePair<string, TokenType>(@"^define", TokenType.Define),
             new KeyValuePair<string, TokenType>(@"^if", TokenType.If),
             new KeyValuePair<string, TokenType>(@"^[<>=]", TokenType.CompareSign),
-            new KeyValuePair<string, TokenType>(@"^-?\d+", TokenType.Int),
+            new KeyValuePair<string, TokenType>(@"^-?\d+(\.\d+)?", TokenType.Double),
             new KeyValuePair<string, TokenType>(@"^[\+\-\*/]", TokenType.ArithmeticSign),
-            new KeyValuePair<string, TokenType>(@"^[a-zA-Z0-9-]+", TokenType.Identifier),
+            new KeyValuePair<string, TokenType>(@"^[a-zA-Z0-9-?]+", TokenType.Identifier),
         }; 
 
         public List<Token> Tokenize(string program)
@@ -48,7 +48,14 @@ namespace Sicp.Lisp
 
                 if (success == false)
                 {
-                    remaiedProgram = string.Empty;
+                    int savedRemainedLength = remaiedProgram.Length;
+                    remaiedProgram = remaiedProgram.Trim();
+                    var trimHasNoEffect = savedRemainedLength == remaiedProgram.Length;
+
+                    if (trimHasNoEffect)
+                    {
+                        remaiedProgram = string.Empty;
+                    }
                 }
             }
 

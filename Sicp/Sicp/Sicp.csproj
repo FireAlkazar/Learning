@@ -72,6 +72,7 @@
     <Compile Include="Lisp\Expressions\BooleanExp.cs" />
     <Compile Include="Lisp\Expressions\DefineExp.cs" />
     <Compile Include="Lisp\Expressions\IfExp.cs" />
+    <Compile Include="Lisp\Tools\ReversePolishNotator.cs" />
     <Compile Include="Lisp\TreeTraverser.cs" />
     <Compile Include="Lisp\Expressions\Exp.cs" />
     <Compile Include="Lisp\Expressions\ExpressionType.cs" />
@@ -87,9 +88,11 @@
     <Compile Include="Tests\LispSimpleCompilerTests.cs" />
     <Compile Include="Tests\LispExpressionParser.cs" />
     <Compile Include="Lisp\Parser.cs" />
+    <Compile Include="Tests\Lisp\LispInterpreterComplexTests.cs" />
     <Compile Include="Tests\Lisp\ListInterpreterTests.cs" />
     <Compile Include="Tests\Lisp\ParserTests.cs" />
     <Compile Include="Tests\Lisp\TokenizerTests.cs" />
+    <Compile Include="Tests\Lisp\Tools\ReversePolishNotatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

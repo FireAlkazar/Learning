@@ -16,7 +16,7 @@ namespace Sicp.Tests.Lisp
                 new Token(TokenType.LeftBracket, "("),
                 new Token(TokenType.Define, "define"),
                 new Token(TokenType.Identifier, "x"),
-                new Token(TokenType.Int, "5"),
+                new Token(TokenType.Double, "5"),
                 new Token(TokenType.RightBracket, ")"),
             };
 

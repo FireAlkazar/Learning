@@ -14,21 +14,11 @@ namespace Sicp.Lisp.Expressions
     {
         public ArithmeticExp(string arithmeticSign)
         {
+            ArithmeticSign = arithmeticSign;
             ArithmeticType = GetArithmeticType(arithmeticSign);
         }
 
-        private ArithmeticType GetArithmeticType(string arithmeticSign)
-        {
-            switch (arithmeticSign)
-            {
-                case "+": return ArithmeticType.Plus;
-                case "-": return ArithmeticType.Minus;
-                case "*": return ArithmeticType.Miltiply;
-                case "/": return ArithmeticType.Divide;
-                default:
-                    throw new InvalidOperationException($"Неизвестный символ арифметической операции {arithmeticSign}");
-            }
-        }
+        public string ArithmeticSign { get; set; }
 
         public ArithmeticType ArithmeticType { get; set; }
 
@@ -48,6 +38,19 @@ namespace Sicp.Lisp.Expressions
                     return (x, y) => x / y;
                 default:
                     throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private ArithmeticType GetArithmeticType(string arithmeticSign)
+        {
+            switch (arithmeticSign)
+            {
+                case "+": return ArithmeticType.Plus;
+                case "-": return ArithmeticType.Minus;
+                case "*": return ArithmeticType.Miltiply;
+                case "/": return ArithmeticType.Divide;
+                default:
+                    throw new InvalidOperationException($"Неизвестный символ арифметической операции {arithmeticSign}");
             }
         }
 

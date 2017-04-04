@@ -6,7 +6,7 @@ namespace Sicp.Lisp.Tokens
         RightBracket,
         Define,
         ArithmeticSign,
-        Int,
+        Double,
         Identifier,
         If,
         CompareSign

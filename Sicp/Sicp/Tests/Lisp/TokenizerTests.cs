@@ -18,7 +18,7 @@ namespace Sicp.Tests.Lisp
             Assert.Equal(TokenType.Define, tokens[1].Type);
             Assert.Equal(TokenType.Identifier, tokens[2].Type);
             Assert.Equal("y", tokens[2].Value);
-            Assert.Equal(TokenType.Int, tokens[3].Type);
+            Assert.Equal(TokenType.Double, tokens[3].Type);
             Assert.Equal("5", tokens[3].Value);
             Assert.Equal(TokenType.RightBracket, tokens[4].Type);
         }
@@ -32,11 +32,11 @@ namespace Sicp.Tests.Lisp
 
             Assert.Equal(TokenType.LeftBracket, tokens[0].Type);
             Assert.Equal(TokenType.ArithmeticSign, tokens[1].Type);
-            Assert.Equal(TokenType.Int, tokens[2].Type);
+            Assert.Equal(TokenType.Double, tokens[2].Type);
             Assert.Equal("3", tokens[2].Value);
-            Assert.Equal(TokenType.Int, tokens[3].Type);
+            Assert.Equal(TokenType.Double, tokens[3].Type);
             Assert.Equal("5", tokens[3].Value);
-            Assert.Equal(TokenType.Int, tokens[4].Type);
+            Assert.Equal(TokenType.Double, tokens[4].Type);
             Assert.Equal("8", tokens[4].Value);
             Assert.Equal(TokenType.RightBracket, tokens[5].Type);
         }

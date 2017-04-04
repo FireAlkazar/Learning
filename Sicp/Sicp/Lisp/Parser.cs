@@ -66,7 +66,7 @@ namespace Sicp.Lisp
                     return new DefineExp();
                 case TokenType.ArithmeticSign:
                     return new ArithmeticExp(token.Value);
-                case TokenType.Int:
+                case TokenType.Double:
                     int expValue = int.Parse(token.Value);
                     return new IntExp(expValue);
                 case TokenType.Identifier:
