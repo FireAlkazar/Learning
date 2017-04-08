@@ -27,7 +27,7 @@ namespace Sicp.Tests.Lisp
             Assert.IsType<DefineExp>(exp);
             Assert.Equal(2, exp.Children.Count);
             Assert.IsType<IdentifierExp>(exp.Children[0]);
-            Assert.IsType<IntExp>(exp.Children[1]);
+            Assert.IsType<DoubleExp>(exp.Children[1]);
         }
 
         [Fact]

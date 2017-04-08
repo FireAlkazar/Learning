@@ -3,7 +3,7 @@
     public enum ExpressionType
     {
         Define,
-        Int,
+        Double,
         Arithmetic,
         Identifier,
         Boolean,

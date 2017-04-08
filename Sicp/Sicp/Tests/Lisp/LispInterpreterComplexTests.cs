@@ -34,7 +34,7 @@ x)))
 
 (sqrt 9)
 ";
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(3.0, result);
          }

@@ -19,16 +19,16 @@ namespace Sicp.Tests.Lisp.Tools
                     {
                         Children =
                         {
-                            new IntExp(1),
-                            new IntExp(2)
+                            new DoubleExp(1),
+                            new DoubleExp(2)
                         }
                     },
                     new ArithmeticExp("-")
                     {
                         Children =
                         {
-                            new IntExp(4),
-                            new IntExp(3)
+                            new DoubleExp(4),
+                            new DoubleExp(3)
                         }
                     },
                 }

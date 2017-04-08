@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Sicp.Lisp.Expressions;
 using Sicp.Lisp.Tokens;
@@ -81,8 +82,8 @@ namespace Sicp.Lisp
                 case TokenType.ArithmeticSign:
                     return new ArithmeticExp(token.Value);
                 case TokenType.Double:
-                    int expValue = int.Parse(token.Value);// WIP
-                    return new IntExp(expValue);
+                    double expValue = double.Parse(token.Value, CultureInfo.InvariantCulture);
+                    return new DoubleExp(expValue);
                 case TokenType.Identifier:
                     return new IdentifierExp(token.Value);
                 case TokenType.CompareSign:

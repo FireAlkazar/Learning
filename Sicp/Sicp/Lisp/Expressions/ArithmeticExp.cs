@@ -24,7 +24,7 @@ namespace Sicp.Lisp.Expressions
 
         public override ExpressionType Type => ExpressionType.Arithmetic;
 
-        public Func<int,int,int> GetFunction()
+        public Func<double,double,double> GetFunction()
         {
             switch (ArithmeticType)
             {

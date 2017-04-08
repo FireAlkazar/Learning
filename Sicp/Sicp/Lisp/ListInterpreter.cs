@@ -6,7 +6,7 @@ namespace Sicp.Lisp
 {
     public class ListInterpreter
     {
-         public int Interprete(string program)
+         public double Interprete(string program)
          {
              List<Token> tokens = new Tokenizer().Tokenize(program);
              List<Exp> exps = new Parser().Parse(tokens);

@@ -13,7 +13,7 @@ namespace Sicp.Lisp.Expressions
 
         public override ExpressionType Type => ExpressionType.Boolean;
 
-        public Func<int,int,bool> GetFunction()
+        public Func<double,double,bool> GetFunction()
         {
             switch (CompareSign)
             {

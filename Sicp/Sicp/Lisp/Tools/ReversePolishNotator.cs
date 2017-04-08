@@ -35,8 +35,8 @@ namespace Sicp.Lisp.Tools
         {
             switch (exp.Type)
             {
-                case ExpressionType.Int:
-                    return ((IntExp)exp).Value.ToString();
+                case ExpressionType.Double:
+                    return ((DoubleExp)exp).Value.ToString();
                 case ExpressionType.Arithmetic:
                     return ((ArithmeticExp)exp).ArithmeticSign;
                 default:

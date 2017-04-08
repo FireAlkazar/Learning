@@ -8,7 +8,7 @@ namespace Sicp.Lisp
     public class TreeTraverser
     {
         private readonly Dictionary<string, DefineExp> _globalContext = new Dictionary<string, DefineExp>();
-        private int _lastResult;
+        private double _lastResult;
 
         public void TraverseTree(List<Exp> tree)
         {
@@ -18,7 +18,7 @@ namespace Sicp.Lisp
             }
         }
 
-        public int GetLastResult()
+        public double GetLastResult()
         {
             return _lastResult;
         }
@@ -30,7 +30,7 @@ namespace Sicp.Lisp
                 case ExpressionType.Define:
                     _lastResult = ExecuteDefine((DefineExp)exp);
                     break;
-                case ExpressionType.Int:
+                case ExpressionType.Double:
                 case ExpressionType.Arithmetic:
                 case ExpressionType.Boolean:
                 case ExpressionType.Identifier:
@@ -61,32 +61,32 @@ namespace Sicp.Lisp
 
         private int CalculateBoolean(BooleanExp exp, Dictionary<string, DefineExp> context)
         {
-            Func<int, int, bool> compareFunction = exp.GetFunction();
+            Func<double, double, bool> compareFunction = exp.GetFunction();
             var left = CalculateExp(exp.Children[0], context);
             var right = CalculateExp(exp.Children[1], context);
 
             return compareFunction(left, right) ? 1 : 0;
         }
 
-        private int CalculateArithmetic(ArithmeticExp exp, Dictionary<string, DefineExp> context)
+        private double CalculateArithmetic(ArithmeticExp exp, Dictionary<string, DefineExp> context)
         {
             if (exp.IsUnaryMinus())
             {
                 return -(CalculateExp(exp.Children[0], context));
             }
 
-            Func<int, int, int> arithmeticFunction = exp.GetFunction();
+            Func<double, double, double> arithmeticFunction = exp.GetFunction();
             return exp
                 .Children
                 .Select(x => CalculateExp(x, context))
                 .Aggregate((x,y) => arithmeticFunction(x,y));
         }
 
-        private int CalculateExp(Exp exp, Dictionary<string, DefineExp> context)
+        private double CalculateExp(Exp exp, Dictionary<string, DefineExp> context)
         {
-            if (exp.Type == ExpressionType.Int)
+            if (exp.Type == ExpressionType.Double)
             {
-                return ((IntExp)exp).Value;
+                return ((DoubleExp)exp).Value;
             }
             else if (exp.Type == ExpressionType.Identifier)
             {
@@ -122,7 +122,7 @@ namespace Sicp.Lisp
                 : @else;
         }
 
-        private int ExecuteDefine(DefineExp exp)
+        private double ExecuteDefine(DefineExp exp)
         {
             _globalContext[exp.IdentifierName] = exp;
 
@@ -131,7 +131,7 @@ namespace Sicp.Lisp
                 : 0;
         }
 
-        private int CalculateIdentifierValue(IdentifierExp exp, Dictionary<string, DefineExp> context)
+        private double CalculateIdentifierValue(IdentifierExp exp, Dictionary<string, DefineExp> context)
         {
             Dictionary<string, DefineExp> localContext = context
                 .ToDictionary(x => x.Key, x => x.Value);

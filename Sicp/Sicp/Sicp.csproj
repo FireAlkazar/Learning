@@ -77,7 +77,7 @@
     <Compile Include="Lisp\TreeTraverser.cs" />
     <Compile Include="Lisp\Expressions\Exp.cs" />
     <Compile Include="Lisp\Expressions\ExpressionType.cs" />
-    <Compile Include="Lisp\Expressions\IntExp.cs" />
+    <Compile Include="Lisp\Expressions\DoubleExp.cs" />
     <Compile Include="Lisp\Expressions\ArithmeticExp.cs" />
     <Compile Include="Lisp\ListInterpreter.cs" />
     <Compile Include="Lisp\Tokens\Token.cs" />

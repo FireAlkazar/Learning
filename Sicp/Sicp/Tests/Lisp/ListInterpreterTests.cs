@@ -11,7 +11,7 @@ namespace Sicp.Tests.Lisp
         [Fact]
         public void SingelPlusStatement()
         {
-            int result = _listInterpreter.Interprete("(+ 3 7)");
+            double result = _listInterpreter.Interprete("(+ 3 7)");
 
             Assert.Equal(10, result);
         }
@@ -23,7 +23,7 @@ namespace Sicp.Tests.Lisp
             const string program = @"(define y 5)
 (+ 3 y)";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(8, result);
         }
@@ -34,7 +34,7 @@ namespace Sicp.Tests.Lisp
             const string program = @"(define size 5)
 size";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(5, result);
         }
@@ -46,7 +46,7 @@ size";
 (define x y)
 (+ x y)";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(10, result);
         }
@@ -54,7 +54,7 @@ size";
         [Fact]
         public void DefineVariableByExpression()
         {
-            int result = _listInterpreter.Interprete("(define y (* 3 5))");
+            double result = _listInterpreter.Interprete("(define y (* 3 5))");
 
             Assert.Equal(3 * 5, result);
         }
@@ -62,7 +62,7 @@ size";
         [Fact]
         public void UnaryMinus()
         {
-            int result = _listInterpreter.Interprete("(- 5)");
+            double result = _listInterpreter.Interprete("(- 5)");
 
             Assert.Equal(-5, result);
         }
@@ -71,7 +71,19 @@ size";
         [Fact]
         public void Minus()
         {
-            int result = _listInterpreter.Interprete("(- 8 5)");
+            double result = _listInterpreter.Interprete("(- 8 5)");
+
+            Assert.Equal(3, result);
+        }
+
+        [Fact]
+        public void AverageFunction()
+        {
+            const string program = @"(define (average x y)
+(/ (+ x y) 2))
+(average 2 4)";
+
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(3, result);
         }
@@ -79,7 +91,7 @@ size";
         [Fact]
         public void LongExpression()
         {
-            int result = _listInterpreter.Interprete("(+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))");
+            double result = _listInterpreter.Interprete("(+ (* 3 (+ (* 2 4) (+ 3 5))) (+ (- 10 7) 6))");
 
             Assert.Equal(3*16+9, result);
         }
@@ -90,7 +102,7 @@ size";
             const string program = @"(define (square x) (* x x))
 (square 21)";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(21 * 21, result);
         }
@@ -102,7 +114,7 @@ size";
 (define (sum-of-squares z y) (+ (square z) (square y)))
 (sum-of-squares 3 4)";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(25, result);
         }
@@ -113,7 +125,7 @@ size";
             const string program = @"(define (abs x) (if (< x 0) (- x) x))
 (abs -3)";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(3, result);
         }
@@ -125,7 +137,7 @@ size";
 (define b 1) 
 ((if (> b 0) + -) a b)";
 
-            int result = _listInterpreter.Interprete(program);
+            double result = _listInterpreter.Interprete(program);
 
             Assert.Equal(3, result);
         }
