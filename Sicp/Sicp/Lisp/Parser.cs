@@ -29,12 +29,26 @@ namespace Sicp.Lisp
         private Exp GetExp()
         {
             Token operatorToken = _remainedTokens.Pop();
-            var isComposite = operatorToken.Type == TokenType.LeftBracket;
+            bool isComposite = operatorToken.Type == TokenType.LeftBracket;
             if (isComposite)
             {
                 operatorToken = _remainedTokens.Pop();
             }
-            Exp exp = GetExpInstance(operatorToken);
+            bool againLeftBracket = operatorToken.Type == TokenType.LeftBracket;
+
+            Exp exp;
+            if (againLeftBracket)
+            {
+                exp = new FuncExp();
+                _remainedTokens.Push(new Token(TokenType.LeftBracket, "("));
+                var functionToEvaluate = GetExp();
+                exp.Children.Add(functionToEvaluate);
+            }
+            else
+            {
+                exp = GetExpInstance(operatorToken);
+            }
+
             if (isComposite)
             {
                 List<Exp> children = GetChildren(_remainedTokens);
@@ -53,7 +67,7 @@ namespace Sicp.Lisp
                 result.Add(exp);
             }
 
-            expressionTokens.Pop();
+            _remainedTokens.Pop();
 
             return result;
         }
@@ -67,7 +81,7 @@ namespace Sicp.Lisp
                 case TokenType.ArithmeticSign:
                     return new ArithmeticExp(token.Value);
                 case TokenType.Double:
-                    int expValue = int.Parse(token.Value);
+                    int expValue = int.Parse(token.Value);// WIP
                     return new IntExp(expValue);
                 case TokenType.Identifier:
                     return new IdentifierExp(token.Value);

@@ -121,12 +121,13 @@ size";
         [Fact]
         public void OperatorAsExpression()
         {
-            const string program = @"(define (a-plus-abs-b a b) ((if (> b 0) + -) a b))
-(a-plus-abs- 3 2)";
+            const string program = @"(define a 2)
+(define b 1) 
+((if (> b 0) + -) a b)";
 
             int result = _listInterpreter.Interprete(program);
 
-            Assert.Equal(5, result);
+            Assert.Equal(3, result);
         }
     }
 }

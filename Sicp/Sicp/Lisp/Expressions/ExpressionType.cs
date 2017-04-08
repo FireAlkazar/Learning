@@ -7,6 +7,7 @@
         Arithmetic,
         Identifier,
         Boolean,
-        If
+        If,
+        Func
     }
 }

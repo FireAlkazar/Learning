@@ -37,9 +37,26 @@ namespace Sicp.Lisp
                 case ExpressionType.If:
                     _lastResult = CalculateExp(exp, _globalContext);
                     break;
+                case ExpressionType.Func:
+                    Exp composedExpression = ComposeExpression((FuncExp) exp, _globalContext);
+                    _lastResult = CalculateExp(composedExpression, _globalContext);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private Exp ComposeExpression(FuncExp exp, Dictionary<string, DefineExp> context)
+        {
+            Exp funcToEvaluate = exp.Children[0];
+            if (funcToEvaluate is IfExp)
+            {
+                Exp composedExp = CalculateIf((IfExp) funcToEvaluate, context);
+                composedExp.Children.AddRange(exp.Children.Skip(1));
+                return composedExp;
+            }
+
+            throw new NotImplementedException("ComposeExpression only supports if right now");
         }
 
         private int CalculateBoolean(BooleanExp exp, Dictionary<string, DefineExp> context)
@@ -85,7 +102,8 @@ namespace Sicp.Lisp
             }
             else if (exp.Type == ExpressionType.If)
             {
-                return CalculateIf((IfExp)exp, context);
+                var ifResultExp = CalculateIf((IfExp) exp, context);
+                return CalculateExp(ifResultExp, context);
             }
             else
             {
@@ -93,15 +111,15 @@ namespace Sicp.Lisp
             }
         }
 
-        private int CalculateIf(IfExp exp, Dictionary<string, DefineExp> context)
+        private Exp CalculateIf(IfExp exp, Dictionary<string, DefineExp> context)
         {
             Exp predicate = exp.Children[0];
             Exp then = exp.Children[1];
             Exp @else = exp.Children[2];
 
             return CalculateExp(predicate, context) > 0
-                ? CalculateExp(then, context)
-                : CalculateExp(@else, context);
+                ? then
+                : @else;
         }
 
         private int ExecuteDefine(DefineExp exp)

@@ -71,6 +71,7 @@
     <Compile Include="BookExercises\Chapter1\CountChangeProblem_1_14.cs" />
     <Compile Include="Lisp\Expressions\BooleanExp.cs" />
     <Compile Include="Lisp\Expressions\DefineExp.cs" />
+    <Compile Include="Lisp\Expressions\FuncExp.cs" />
     <Compile Include="Lisp\Expressions\IfExp.cs" />
     <Compile Include="Lisp\Tools\ReversePolishNotator.cs" />
     <Compile Include="Lisp\TreeTraverser.cs" />
