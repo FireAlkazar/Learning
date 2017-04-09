@@ -133,34 +133,46 @@ namespace Sicp.Lisp
 
         private double CalculateIdentifierValue(IdentifierExp exp, Dictionary<string, DefineExp> context)
         {
-            Dictionary<string, DefineExp> localContext = context
-                .ToDictionary(x => x.Key, x => x.Value);
+            Dictionary<string, DefineExp> localContext = CopyContext(context);
 
             if (localContext.ContainsKey(exp.Name) == false)
             {
                 throw new InvalidOperationException($"В списке переменных не найдена переменная с именем {exp.Name}.");
             }
 
-            if (exp.Children.Count == 0)
+            if (IsPrimitive(exp))
             {
-                return CalculateExp(localContext[exp.Name].Children[1], context);
+                return CalculateExp(localContext[exp.Name].Children[1], localContext);
             }
 
+            //function defined
             var defineExp = localContext[exp.Name];
             var functionSignature = (IdentifierExp)defineExp.Children[0];
 
-            for (int argumentPosition = 0; argumentPosition < functionSignature.Children.Count; argumentPosition++)
+            for (int argumentIndex = 0; argumentIndex < functionSignature.Children.Count; argumentIndex++)
             {
-                var functionArgument = (IdentifierExp)functionSignature.Children[argumentPosition];
+                var functionArgument = (IdentifierExp)functionSignature.Children[argumentIndex];
                 var argumentSubstitution = new DefineExp();
                 argumentSubstitution.Children.Add(functionArgument);
-                argumentSubstitution.Children.Add(exp.Children[argumentPosition]);
+                double argValue = CalculateExp(exp.Children[argumentIndex], context);
+                argumentSubstitution.Children.Add(new DoubleExp(argValue));
                 localContext[functionArgument.Name] = argumentSubstitution;
             }
 
             var functionBody = defineExp.Children[1];
 
             return CalculateExp(functionBody, localContext);
+        }
+
+        private static bool IsPrimitive(Exp exp)
+        {
+            return exp.Children.Count == 0;
+        }
+
+        private static Dictionary<string, DefineExp> CopyContext(Dictionary<string, DefineExp> context)
+        {
+            return context
+                .ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

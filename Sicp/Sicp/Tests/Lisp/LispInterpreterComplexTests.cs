@@ -1,4 +1,5 @@
-﻿using Sicp.Lisp;
+﻿using System;
+using Sicp.Lisp;
 using Xunit;
 
 namespace Sicp.Tests.Lisp
@@ -36,7 +37,7 @@ x)))
 ";
             double result = _listInterpreter.Interprete(program);
 
-            Assert.Equal(3.0, result);
+            Assert.True(Math.Abs(3.0 - result) < 0.001);
          }
     }
 }

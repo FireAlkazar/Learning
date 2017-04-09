@@ -111,7 +111,7 @@ size";
         public void DefineSumOfSquaresFunction()
         {
             const string program = @"(define (square x) (* x x))
-(define (sum-of-squares z y) (+ (square z) (square y)))
+(define (sum-of-squares x y) (+ (square x) (square y)))
 (sum-of-squares 3 4)";
 
             double result = _listInterpreter.Interprete(program);
