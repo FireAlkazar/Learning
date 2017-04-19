@@ -1,0 +1,22 @@
+DSL - специализированный синтаксис или элементы синтаксиса, которые помогают лучше выразить намерения, что данная часть программы должна делать.
+
+Примеры паттернов:
+1. Method Chaining
+(пример с валидацией, роутингом)
+2. Билдер
+(тест билдер)
+3. Nested functions
+4. Annotation
+linq2sql
+5.Desicion table?
+
+a. Dependency network
+msbuild
+b. Templated generation
+razor
+c. Parser generator
+quokka
+ 
+А еще есть паттерны?
+Other patterns
+	https://martinfowler.com/dslCatalog/
